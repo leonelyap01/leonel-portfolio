@@ -1,0 +1,18 @@
+# Personnel / CV
+*.docx
+*.pdf
+
+# Système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Éditeur
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
