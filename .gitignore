@@ -1,6 +1,8 @@
 # Personnel / CV
 *.docx
 *.pdf
+# Autoriser le CV public
+!cv-leonel-yapi.pdf
 
 # Système
 .DS_Store

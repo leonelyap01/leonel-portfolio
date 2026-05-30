@@ -130,6 +130,20 @@ nav {
   transition: background 0.2s, transform 0.15s;
 }
 .nav-cta:hover { background: var(--accent2); transform: translateY(-1px); }
+.nav-actions { display: flex; align-items: center; gap: 0.75rem; }
+.nav-cv {
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em;
+  color: var(--text);
+  border: 1px solid var(--border2);
+  padding: 0.5rem 1rem; border-radius: 2rem;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  transition: border-color 0.2s, color 0.2s, transform 0.15s;
+}
+.nav-cv:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+@media (max-width: 640px) {
+  .nav-cv span, .nav-cv { font-size: 0.7rem; padding: 0.4rem 0.8rem; }
+}
 
 /* HERO */
 .hero {
@@ -787,7 +801,10 @@ body::after {
     <a href="#parcours">Parcours</a>
     <a href="#contact">Contact</a>
   </div>
-  <a href="mailto:leonelyapi30@gmail.com" class="nav-cta">Me contacter <i class="fa-solid fa-arrow-right"></i></a>
+  <div class="nav-actions">
+    <a href="cv-leonel-yapi.pdf" download class="nav-cv"><i class="fa-solid fa-download"></i> CV</a>
+    <a href="mailto:leonelyapi30@gmail.com" class="nav-cta">Me contacter <i class="fa-solid fa-arrow-right"></i></a>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -805,6 +822,7 @@ body::after {
     </p>
     <div class="hero-btns fade-in-up delay-3">
       <a href="#projets" class="btn-primary magnetic">Voir mes projets <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="cv-leonel-yapi.pdf" download class="btn-ghost magnetic"><i class="fa-solid fa-download"></i> Télécharger mon CV</a>
       <a href="mailto:leonelyapi30@gmail.com" class="btn-ghost magnetic"><i class="fa-regular fa-envelope"></i> Me contacter</a>
     </div>
   </div>
@@ -1106,6 +1124,10 @@ body::after {
         <div class="contact-item">
           <i class="fa-solid fa-laptop-code contact-ico"></i>
           <span>Machine : ThinkPad · Ubuntu</span>
+        </div>
+        <div class="contact-item">
+          <i class="fa-solid fa-file-pdf contact-ico"></i>
+          <span>CV : <a href="cv-leonel-yapi.pdf" download>Télécharger le PDF</a></span>
         </div>
         <div class="contact-item">
           <i class="fa-brands fa-github contact-ico"></i>
