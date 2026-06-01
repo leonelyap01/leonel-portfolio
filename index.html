@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Leonel Yapi — Portfolio</title>
+<title>Leonel Yapi   Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
@@ -37,7 +37,7 @@ body {
   cursor: none;
 }
 
-/* CUSTOM CURSOR — modern dual layer */
+/* CUSTOM CURSOR   modern dual layer */
 .cursor {
   width: 6px; height: 6px;
   background: var(--accent);
@@ -75,7 +75,7 @@ body {
 @keyframes cursor-spin {
   to { rotate: 360deg; }
 }
-/* HOVER STATE — expand + fill */
+/* HOVER STATE   expand + fill */
 .cursor.hover {
   width: 0; height: 0;
   opacity: 0;
@@ -485,6 +485,38 @@ section {
   gap: 0.35rem;
   margin-top: 0.8rem;
 }
+.timeline-column { display: flex; flex-direction: column; }
+.timeline-heading {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(232,101,26,0.2);
+}
+.timeline-heading i {
+  width: 28px; height: 28px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(232,101,26,0.1);
+  border: 1px solid rgba(232,101,26,0.25);
+  border-radius: 0.4rem;
+  font-size: 0.85rem;
+}
+.timeline-heading-second {
+  margin-top: 1.5rem;
+  color: var(--teal);
+  border-bottom-color: rgba(30,200,168,0.2);
+}
+.timeline-heading-second i {
+  background: rgba(30,200,168,0.1);
+  border-color: rgba(30,200,168,0.25);
+  color: var(--teal);
+}
+.timeline-edu .timeline-item::before { border-color: var(--teal); }
+.timeline-edu .timeline-year { color: var(--teal); }
 
 /* FOOTER */
 footer {
@@ -525,7 +557,7 @@ footer {
   transform: none;
 }
 
-/* HERO ENTRANCE — word stagger */
+/* HERO ENTRANCE   word stagger */
 .hero-name .word {
   display: inline-block;
   opacity: 0;
@@ -553,14 +585,14 @@ footer {
   to { opacity: 1; transform: none; }
 }
 
-/* HERO CARD — floating */
+/* HERO CARD   floating */
 .hero-card { animation: float 6s ease-in-out infinite; transform-style: preserve-3d; }
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
 }
 
-/* ANIMATED GRADIENT — accent text */
+/* ANIMATED GRADIENT   accent text */
 .hero-name .accent {
   background: linear-gradient(120deg, #E8651A 0%, #F5A623 40%, #E8651A 70%, #F5A623 100%);
   background-size: 200% 100%;
@@ -574,21 +606,21 @@ footer {
   50% { background-position: 100% 50%; }
 }
 
-/* HERO RADIAL — pulsing */
+/* HERO RADIAL   pulsing */
 .hero::before { animation: blob-pulse 8s ease-in-out infinite; }
 @keyframes blob-pulse {
   0%, 100% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.15); opacity: 0.7; }
 }
 
-/* NAV — scroll state */
+/* NAV   scroll state */
 nav.scrolled {
   padding: 0.8rem 3rem;
   background: rgba(10,10,11,0.92);
   box-shadow: 0 8px 32px rgba(0,0,0,0.4);
 }
 
-/* PROJECT CARD — shine + tilt */
+/* PROJECT CARD   shine + tilt */
 .project-card {
   position: relative;
   transform-style: preserve-3d;
@@ -609,7 +641,7 @@ nav.scrolled {
 }
 .project-card:hover::after { opacity: 1; }
 
-/* SKILL CARD — spotlight glow */
+/* SKILL CARD   spotlight glow */
 .skill-card {
   position: relative;
   transform-style: preserve-3d;
@@ -639,7 +671,7 @@ nav.scrolled {
   box-shadow: 0 12px 32px rgba(232,101,26,0.35);
 }
 
-/* TIMELINE — dot pulse on hover */
+/* TIMELINE   dot pulse on hover */
 .timeline-item:hover::before {
   background: var(--accent);
   box-shadow: 0 0 0 6px rgba(232,101,26,0.15);
@@ -647,11 +679,11 @@ nav.scrolled {
 }
 .timeline-item::before { transition: all 0.3s; }
 
-/* STAT — number scale on view */
+/* STAT   number scale on view */
 .stat { transition: transform 0.3s, background 0.3s; }
 .stat:hover { transform: translateY(-2px); background: rgba(232,101,26,0.06); }
 
-/* AVATAR — slow rotation glow */
+/* AVATAR   slow rotation glow */
 .avatar-ring {
   background: conic-gradient(from 0deg, var(--accent), var(--teal), var(--accent2), var(--accent));
   animation: avatar-spin 8s linear infinite;
@@ -859,7 +891,7 @@ body::after {
 <!-- HERO -->
 <div class="hero">
   <div>
-    <div class="hero-tag fade-in-up"><i class="fa-solid fa-location-dot"></i> Disponible — Abidjan, CI</div>
+    <div class="hero-tag fade-in-up"><i class="fa-solid fa-location-dot"></i> Disponible   Abidjan, CI</div>
     <h1 class="hero-name">
       <span class="line"><span class="word">Léonel</span></span>
       <span class="line"><span class="word accent">Yapi</span></span>
@@ -920,7 +952,7 @@ body::after {
 
   <div class="projects-grid">
 
-    <!-- BIOMETRIE X — FEATURED -->
+    <!-- BIOMETRIE X   FEATURED -->
     <div class="project-card featured reveal">
       <div class="project-header">
         <div class="project-accent-bar" style="background: linear-gradient(90deg, #E8651A, #2DCF8C);"></div>
@@ -930,7 +962,7 @@ body::after {
       </div>
       <div class="project-body">
         <p class="project-desc">
-           Systèmed'authentification biométrique déployé en production,Authentification mutuelle par carte à puce JavaCard + empreinte digitale SecuGen, chiffrement ECDH P-192 + AES-CBC, SSO Keycloak et architecture microservices Docker.
+           Système d'authentification biométrique déployé en production,Authentification mutuelle par carte à puce JavaCard + empreinte digitale SecuGen, chiffrement ECDH P-192 + AES-CBC, SSO Keycloak et architecture microservices Docker.
         </p>
         <div class="project-tech">
           <span class="tech-tag">Spring Boot 3</span>
@@ -992,7 +1024,7 @@ body::after {
       </div>
       <div class="project-body">
         <p class="project-desc">
-          Système complet de gestion du cycle de vie des cartes bancaires et badges agent — de la commande à la distribution. Commandes unitaires ou import Excel, production en lots, installation applets GIM-UEMOA, enrôlement biométrique, gestion des statuts carte et plafonds de transaction.
+          Système complet de gestion du cycle de vie des cartes bancaires et badges agent   de la commande à la distribution. Commandes unitaires ou import Excel, production en lots, installation applets GIM-UEMOA, enrôlement biométrique, gestion des statuts carte et plafonds de transaction.
         </p>
         <div class="project-tech">
           <span class="tech-tag">Spring Boot</span>
@@ -1020,7 +1052,7 @@ body::after {
       </div>
       <div class="project-body">
         <p class="project-desc">
-          Application mobile pour le transport urbain à Abidjan — suivi GPS des bus en temps réel, paiement intégré, génération de ticket QR code. Stack Flutter, Node.js, PostgreSQL, MQTT.
+          Application mobile pour le transport urbain à Abidjan   suivi GPS des bus en temps réel, paiement intégré, génération de ticket QR code. Stack Flutter, Node.js, PostgreSQL, MQTT.
         </p>
         <div class="project-tech">
           <span class="tech-tag">Flutter</span>
@@ -1159,7 +1191,7 @@ body::after {
         Passionné par la <strong>cybersécurité</strong> et les technologies biométriques, je construis des systèmes d'authentification robustes pour l'Afrique de demain.
       </p>
       <p>
-        Étudiant en Master 1 <strong>BDGL (Big Data & Génie Logiciel)</strong> à l'UFHB d'Abidjan, je combine rigueur académique et expérience terrain — avec BiométrieX déjà en production chez <strong>Orange CI</strong>.
+        Étudiant en Master <strong>BDGL (Big Data & Génie Logiciel)</strong> à l'UFHB d'Abidjan, je combine rigueur académique et expérience terrain   avec BiométrieX déjà en production chez <strong>Orange CI</strong>.
       </p>
       <div class="about-contact" id="contact">
         <div class="contact-item">
@@ -1194,57 +1226,83 @@ body::after {
 
     </div>
 
-    <div class="timeline reveal">
-      <div class="timeline-item">
-        <div class="timeline-year"><i class="fa-solid fa-briefcase"></i> Novembre 2025 — Présent · Abidjan, CI</div>
-        <div class="timeline-title">Consultant Ingénieur Logiciel · <span class="timeline-company">Groupe Défis et Stratégie</span> <span class="timeline-tag">CDD</span></div>
-        <div class="timeline-desc">
-          Conception et déploiement de plateformes biométriques en production pour des clients grands comptes :
-          <ul class="timeline-list">
-            <li><strong>BiométrieX</strong> (Orange CI, ALLO 101) — authentification par carte à puce JavaCard + empreinte SecuGen, chiffrement ECDH, SSO Keycloak.</li>
-            <li><strong>BioTransac</strong> (UNACOOPEC CI) — transactions biométriques à la caisse (versements/retraits), intégration CBS, tableau de bord temps réel, détection d'anomalies, reçus PDF, sécurité JWT/OIDC.</li>
-            <li><strong>Gestion Cartes</strong> (UNACOOPEC CI) — cycle de vie complet des cartes bancaires & badges agent, production en lots, enrôlement biométrique, applets JavaCard, conformité GIM-UEMOA.</li>
-          </ul>
+    <div class="timeline-column reveal">
+
+      <h3 class="timeline-heading"><i class="fa-solid fa-briefcase"></i> Expérience professionnelle</h3>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-year"><i class="fa-solid fa-briefcase"></i> Novembre 2025 — Présent · Abidjan, CI</div>
+          <div class="timeline-title">Consultant Ingénieur Logiciel · <span class="timeline-company">Groupe Défis et Stratégie</span> <span class="timeline-tag">CDD</span></div>
+          <div class="timeline-desc">
+            Conception et déploiement de plateformes biométriques en production pour des clients grands comptes :
+            <ul class="timeline-list">
+              <li><strong>BiométrieX</strong> (Orange CI, ALLO 101) — authentification par carte à puce JavaCard + empreinte SecuGen, chiffrement ECDH, SSO Keycloak.</li>
+              <li><strong>BioTransac</strong> (UNACOOPEC CI) — transactions biométriques à la caisse (versements/retraits), intégration CBS, tableau de bord temps réel, détection d'anomalies, reçus PDF, sécurité JWT/OIDC.</li>
+              <li><strong>Gestion Cartes</strong> (UNACOOPEC CI) — cycle de vie complet des cartes bancaires & badges agent, production en lots, enrôlement biométrique, applets JavaCard, conformité GIM-UEMOA.</li>
+            </ul>
+          </div>
         </div>
-      </div>
 
-      <div class="timeline-item">
-        <div class="timeline-year"><i class="fa-solid fa-graduation-cap"></i> 2025 — Présent · UFHB Abidjan</div>
-        <div class="timeline-title">Master BDGL · <span class="timeline-company">Université Félix Houphouët-Boigny</span></div>
-        <div class="timeline-desc">Base de données & Génie Logiciel. Promotion 2025-2026. Spécialisation en cybersécurité et architectures distribuées.</div>
-      </div>
+        <div class="timeline-item">
+          <div class="timeline-year"><i class="fa-solid fa-briefcase"></i> Janvier 2025 — Septembre 2025 · Abidjan, CI</div>
+          <div class="timeline-title">Développeur Full Stack Java / Spring Boot · Angular · <span class="timeline-company">ATOS</span> <span class="timeline-tag">CDD</span></div>
+          <div class="timeline-desc">
+            Développement d'applications microservices pour clients entreprise. Conception d'API REST, intégration Keycloak, déploiements containerisés et pipelines CI/CD complets.
+            <div class="timeline-stack">
+              <span class="tech-tag">Spring Boot</span>
+              <span class="tech-tag">Spring Cloud</span>
+              <span class="tech-tag">Angular</span>
+              <span class="tech-tag">PostgreSQL</span>
+              <span class="tech-tag">Keycloak</span>
+              <span class="tech-tag">Docker</span>
+              <span class="tech-tag">Kubernetes</span>
+              <span class="tech-tag">ArgoCD</span>
+              <span class="tech-tag">GitLab CI/CD</span>
+              <span class="tech-tag">Microservices</span>
+            </div>
+          </div>
+        </div>
 
-      <div class="timeline-item">
-        <div class="timeline-year"><i class="fa-solid fa-briefcase"></i> Janvier 2025 — Septembre 2025 · Abidjan, CI</div>
-        <div class="timeline-title">Développeur Full Stack Java / Spring Boot · Angular · <span class="timeline-company">ATOS</span> <span class="timeline-tag">CDD</span></div>
-        <div class="timeline-desc">
-          Développement d'applications microservices pour clients entreprise. Conception d'API REST, intégration Keycloak, déploiements containerisés et pipelines CI/CD complets.
-          <div class="timeline-stack">
-            <span class="tech-tag">Spring Boot</span>
-            <span class="tech-tag">Spring Cloud</span>
-            <span class="tech-tag">Angular</span>
-            <span class="tech-tag">PostgreSQL</span>
-            <span class="tech-tag">Keycloak</span>
-            <span class="tech-tag">Docker</span>
-            <span class="tech-tag">Kubernetes</span>
-            <span class="tech-tag">ArgoCD</span>
-            <span class="tech-tag">GitLab CI/CD</span>
-            <span class="tech-tag">Microservices</span>
+        <div class="timeline-item">
+          <div class="timeline-year"><i class="fa-solid fa-briefcase"></i> 2023 — 2024 · Abidjan, CI</div>
+          <div class="timeline-title">Développeur & Testeur QA · <span class="timeline-company">Groupe Défis et Stratégie</span> <span class="timeline-tag">CDD</span></div>
+          <div class="timeline-desc">
+            Projet <strong>SIGE MENA</strong> (Système Intégré de Gestion de l'Éducation).
+            <ul class="timeline-list">
+              <li>Tests fonctionnels et automatisés avec Robot Framework et Python sur les modules critiques.</li>
+              <li>Développement et maintenance de fonctionnalités sur <strong>OpenEMIS</strong>, plateforme open-source de gestion scolaire.</li>
+            </ul>
           </div>
         </div>
       </div>
 
-      <div class="timeline-item">
-        <div class="timeline-year"><i class="fa-solid fa-briefcase"></i> 2023 — 2024 · Abidjan, CI</div>
-        <div class="timeline-title">Développeur & Testeur QA · <span class="timeline-company">Groupe Défis et Stratégie</span> <span class="timeline-tag">CDD</span></div>
-        <div class="timeline-desc">
-          Projet <strong>SIGE MENA</strong> (Système Intégré de Gestion de l'Éducation).
-          <ul class="timeline-list">
-            <li>Tests fonctionnels et automatisés avec Robot Framework et Python sur les modules critiques.</li>
-            <li>Développement et maintenance de fonctionnalités sur <strong>OpenEMIS</strong>, plateforme open-source de gestion scolaire.</li>
-          </ul>
+      <h3 class="timeline-heading timeline-heading-second"><i class="fa-solid fa-graduation-cap"></i> Formation</h3>
+      <div class="timeline timeline-edu">
+        <div class="timeline-item">
+          <div class="timeline-year"><i class="fa-solid fa-graduation-cap"></i> 2026 · En cours</div>
+          <div class="timeline-title">Master en Base de Données & Génie Logiciel · <span class="timeline-company">UFHB Cocody</span></div>
+          <div class="timeline-desc">Université Félix Houphouët-Boigny d'Abidjan. Spécialisation cybersécurité, Big Data et architectures distribuées.</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-year"><i class="fa-solid fa-certificate"></i> 2025 · 4 mois</div>
+          <div class="timeline-title">Certification Développeur Full Stack — Java & Angular · <span class="timeline-company">ATOS Digital Academy</span></div>
+          <div class="timeline-desc">Formation intensive industrielle : Spring Boot, Angular, microservices, Docker, Kubernetes, CI/CD GitLab et bonnes pratiques DevOps.</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-year"><i class="fa-solid fa-graduation-cap"></i> 2023</div>
+          <div class="timeline-title">Licence en Informatique — Option Génie Logiciel · <span class="timeline-company">Université de Technologie d'Abidjan</span></div>
+          <div class="timeline-desc">UTA — Fondamentaux du génie logiciel, algorithmique, bases de données et programmation orientée objet.</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-year"><i class="fa-solid fa-school"></i> 2020</div>
+          <div class="timeline-title">Baccalauréat Série D · <span class="timeline-company">Lycée Moderne de Bongouanou</span></div>
+          <div class="timeline-desc">Série scientifique (Mathématiques & Sciences de la Vie et de la Terre).</div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -1339,7 +1397,7 @@ window.addEventListener('scroll', () => {
   navEl.classList.toggle('scrolled', h.scrollTop > 40);
 }, { passive: true });
 
-/* MAGNETIC BUTTONS — disabled on touch */
+/* MAGNETIC BUTTONS   disabled on touch */
 if (!isTouch) document.querySelectorAll('.magnetic').forEach(btn => {
   btn.addEventListener('mousemove', e => {
     const r = btn.getBoundingClientRect();
@@ -1352,7 +1410,7 @@ if (!isTouch) document.querySelectorAll('.magnetic').forEach(btn => {
   });
 });
 
-/* 3D TILT — project & skill cards */
+/* 3D TILT   project & skill cards */
 function bindTilt(selector, max = 6) {
   document.querySelectorAll(selector).forEach(card => {
     card.addEventListener('mousemove', e => {
