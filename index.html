@@ -106,11 +106,16 @@
 <!-- ============ PERF ============ -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-<link rel="preload" as="image" href="photo.jpeg">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preload" as="image" href="photo.webp" type="image/webp">
 
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<!-- Google Fonts (async pour ne pas bloquer le rendu) -->
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"></noscript>
+
+<!-- Font Awesome (async pour ne pas bloquer le rendu) -->
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
 <style>
 :root {
   --bg: #0A0A0B;
@@ -1525,7 +1530,12 @@ body::after {
   </div>
 
   <div class="hero-card">
-    <div class="avatar-ring"><img src="photo.jpeg" alt="Leonel Yapi"></div>
+    <div class="avatar-ring">
+      <picture>
+        <source srcset="photo.webp" type="image/webp">
+        <img src="photo.jpeg" alt="Leonel Yapi" width="1254" height="1254" fetchpriority="high">
+      </picture>
+    </div>
     <div class="card-name">Yapi Akoupo Leonel Xavier</div>
     <div class="card-role">// Ingénieur Logiciel & Sécurité Biométrique</div>
     <div class="card-stats">
@@ -1596,13 +1606,22 @@ body::after {
         </div>
         <div class="project-screenshots triple">
           <div class="shot js-lightbox" data-img="screenshot-biometriex-orange.jpg" data-caption="BiométrieX — Déploiement Orange CI">
-            <img src="screenshot-biometriex-orange.jpg" alt="BiométrieX déployé chez Orange CI" loading="lazy">
+            <picture>
+              <source srcset="screenshot-biometriex-orange.webp" type="image/webp">
+              <img src="screenshot-biometriex-orange.jpg" alt="BiométrieX déployé chez Orange CI" width="1600" height="900" loading="lazy">
+            </picture>
           </div>
           <div class="shot js-lightbox" data-img="screenshot-biometriex-badges.jpg" data-caption="BiométrieX — Gestion des badges">
-            <img src="screenshot-biometriex-badges.jpg" alt="Interface de gestion des badges biométriques" loading="lazy">
+            <picture>
+              <source srcset="screenshot-biometriex-badges.webp" type="image/webp">
+              <img src="screenshot-biometriex-badges.jpg" alt="Interface de gestion des badges biométriques" width="1600" height="924" loading="lazy">
+            </picture>
           </div>
           <div class="shot js-lightbox" data-img="screenshot-biometriex-login.jpg" data-caption="BiométrieX — Authentification">
-            <img src="screenshot-biometriex-login.jpg" alt="Écran d'authentification BiométrieX" loading="lazy">
+            <picture>
+              <source srcset="screenshot-biometriex-login.webp" type="image/webp">
+              <img src="screenshot-biometriex-login.jpg" alt="Écran d'authentification BiométrieX" width="1600" height="930" loading="lazy">
+            </picture>
           </div>
         </div>
         <div class="project-footer" style="padding: 1.25rem 0 0; border-top: 1px solid var(--border); margin-top: 1.25rem;">
@@ -1636,7 +1655,10 @@ body::after {
         </div>
         <div class="project-screenshots single">
           <div class="shot js-lightbox" data-img="screenshot-biotransac.jpg" data-caption="BioTransac — Transactions biométriques au guichet UNACOOPEC CI">
-            <img src="screenshot-biotransac.jpg" alt="Interface BioTransac — guichet UNACOOPEC" loading="lazy">
+            <picture>
+              <source srcset="screenshot-biotransac.webp" type="image/webp">
+              <img src="screenshot-biotransac.jpg" alt="Interface BioTransac — guichet UNACOOPEC" width="1552" height="1202" loading="lazy">
+            </picture>
           </div>
         </div>
       </div>
@@ -1873,7 +1895,7 @@ body::after {
         <div class="timeline-item">
           <div class="timeline-year"><i class="fa-solid fa-briefcase"></i> Novembre 2025   Présent · Abidjan, CI</div>
           <div class="timeline-header">
-            <div class="company-logo has-img" title="Groupe Défis et Stratégie"><img src="logo-gds.jpg" alt="Groupe Défis et Stratégie"></div>
+            <div class="company-logo has-img" title="Groupe Défis et Stratégie"><img src="logo-gds.jpg" alt="Groupe Défis et Stratégie" width="200" height="200" loading="lazy" decoding="async"></div>
             <div class="timeline-title">Consultant Ingénieur Logiciel · <span class="timeline-company">Groupe Défis et Stratégie</span> <span class="timeline-tag">CDD</span></div>
           </div>
           <div class="timeline-desc">
@@ -1889,7 +1911,7 @@ body::after {
         <div class="timeline-item">
           <div class="timeline-year"><i class="fa-solid fa-briefcase"></i> Janvier 2025   Septembre 2025 · Abidjan, CI</div>
           <div class="timeline-header">
-            <div class="company-logo has-img" title="Atos"><img src="logo-atos.jpg" alt="Atos"></div>
+            <div class="company-logo has-img" title="Atos"><img src="logo-atos.jpg" alt="Atos" width="100" height="100" loading="lazy" decoding="async"></div>
             <div class="timeline-title">Développeur Full Stack Java / Spring Boot · Angular · <span class="timeline-company">ATOS</span> <span class="timeline-tag">CDD</span></div>
           </div>
           <div class="timeline-desc">
@@ -1912,7 +1934,7 @@ body::after {
         <div class="timeline-item">
           <div class="timeline-year"><i class="fa-solid fa-briefcase"></i> 2023   2024 · Abidjan, CI</div>
           <div class="timeline-header">
-            <div class="company-logo has-img" title="Groupe Défis et Stratégie"><img src="logo-gds.jpg" alt="Groupe Défis et Stratégie"></div>
+            <div class="company-logo has-img" title="Groupe Défis et Stratégie"><img src="logo-gds.jpg" alt="Groupe Défis et Stratégie" width="200" height="200" loading="lazy" decoding="async"></div>
             <div class="timeline-title">Développeur & Testeur QA · <span class="timeline-company">Groupe Défis et Stratégie</span> <span class="timeline-tag">CDD</span></div>
           </div>
           <div class="timeline-desc">
@@ -1922,7 +1944,10 @@ body::after {
               <li>Développement et maintenance de fonctionnalités sur <strong>OpenEMIS</strong>, plateforme open-source de gestion scolaire.</li>
             </ul>
             <div class="timeline-screenshot js-lightbox" data-img="screenshot-sige-mena.jpg" data-caption="SIGE MENA — Système Intégré de Gestion de l'Éducation">
-              <img src="screenshot-sige-mena.jpg" alt="Capture du système SIGE MENA" loading="lazy">
+              <picture>
+                <source srcset="screenshot-sige-mena.webp" type="image/webp">
+                <img src="screenshot-sige-mena.jpg" alt="Capture du système SIGE MENA" width="1600" height="910" loading="lazy">
+              </picture>
             </div>
           </div>
         </div>
@@ -1930,7 +1955,7 @@ body::after {
         <div class="timeline-item">
           <div class="timeline-year"><i class="fa-solid fa-user-graduate"></i> Juillet 2023   Septembre 2023 · Abidjan, CI</div>
           <div class="timeline-header">
-            <div class="company-logo has-img" title="GS2E"><img src="logo-gs2e.jpg" alt="GS2E"></div>
+            <div class="company-logo has-img" title="GS2E"><img src="logo-gs2e.jpg" alt="GS2E" width="300" height="158" loading="lazy" decoding="async"></div>
             <div class="timeline-title">Stagiaire Développeur · <span class="timeline-company">GS2E   Groupement des Services Eaux et Électricité</span> <span class="timeline-tag timeline-tag-stage">Stage de fin d'études</span></div>
           </div>
           <div class="timeline-desc">
@@ -1964,7 +1989,7 @@ body::after {
         <div class="timeline-item">
           <div class="timeline-year"><i class="fa-solid fa-certificate"></i> 2025 · 4 mois</div>
           <div class="timeline-header">
-            <div class="company-logo has-img" title="ATOS Digital Academy"><img src="logo-atos.jpg" alt="ATOS Digital Academy"></div>
+            <div class="company-logo has-img" title="ATOS Digital Academy"><img src="logo-atos.jpg" alt="ATOS Digital Academy" width="100" height="100" loading="lazy" decoding="async"></div>
             <div class="timeline-title">Certification Développeur Full Stack   Java & Angular · <span class="timeline-company">ATOS Digital Academy</span></div>
           </div>
           <div class="timeline-desc">Formation intensive industrielle : Spring Boot, Angular, microservices, Docker, Kubernetes, CI/CD GitLab et bonnes pratiques DevOps.</div>
