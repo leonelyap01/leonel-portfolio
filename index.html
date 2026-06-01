@@ -392,10 +392,25 @@ section {
 .project-card.featured .project-body { border-bottom: none; padding: 2rem; }
 
 /* TIMELINE / ABOUT */
-.about-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; align-items: start; }
+.about-grid { display: grid; grid-template-columns: 0.85fr 1.6fr; gap: 4rem; align-items: start; }
+.about-info { position: sticky; top: 6rem; }
 .about-info p { font-size: 1rem; line-height: 1.8; color: #9A9890; margin-bottom: 1rem; }
 .about-info p strong { color: var(--text); }
-.about-contact { margin-top: 2rem; }
+.about-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  position: relative;
+  overflow: hidden;
+}
+.about-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--teal));
+}
+.about-contact { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
 .contact-item {
   display: flex; align-items: center; gap: 0.75rem;
   font-family: var(--font-mono); font-size: 0.82rem;
@@ -419,19 +434,42 @@ section {
   transform: translateY(-2px);
 }
 
-.timeline { position: relative; padding-left: 2rem; }
+.timeline { position: relative; padding-left: 1.75rem; }
 .timeline::before {
   content: ''; position: absolute; left: 0; top: 0; bottom: 0;
   width: 1px; background: var(--border2);
 }
-.timeline-item { position: relative; margin-bottom: 2.5rem; }
+.timeline-item {
+  position: relative;
+  margin-bottom: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.85rem;
+  padding: 1.4rem 1.5rem;
+  transition: border-color 0.3s, transform 0.3s, background 0.3s;
+}
+.timeline-item:hover {
+  border-color: var(--border2);
+  transform: translateX(4px);
+  background: rgba(255,255,255,0.015);
+}
 .timeline-item::before {
   content: ''; position: absolute;
-  left: -2rem; top: 0.35rem;
-  width: 9px; height: 9px;
-  border-radius: 50%; border: 2px solid var(--accent);
+  left: -1.75rem; top: 1.5rem;
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
   background: var(--bg);
   transform: translateX(-50%);
+  box-shadow: 0 0 0 4px var(--bg);
+}
+.timeline-item::after {
+  content: ''; position: absolute;
+  left: -1.75rem; top: 1.5rem;
+  width: 1.3rem; height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  transform: translateX(0);
+  opacity: 0.5;
 }
 .timeline-year {
   font-family: var(--font-mono); font-size: 0.72rem;
@@ -515,8 +553,41 @@ section {
   border-color: rgba(30,200,168,0.25);
   color: var(--teal);
 }
-.timeline-edu .timeline-item::before { border-color: var(--teal); }
-.timeline-edu .timeline-year { color: var(--teal); }
+.timeline-edu {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding-left: 0;
+}
+.timeline-edu::before { display: none; }
+.timeline-edu .timeline-item {
+  margin-bottom: 0;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.timeline-edu .timeline-item:hover {
+  border-color: rgba(30,200,168,0.3);
+  transform: translateY(-3px);
+  background: rgba(30,200,168,0.02);
+}
+.timeline-edu .timeline-item::before,
+.timeline-edu .timeline-item::after { display: none; }
+.timeline-edu .timeline-year { color: var(--teal); margin-bottom: 0.5rem; }
+.timeline-edu .timeline-year i { color: var(--teal); }
+.timeline-edu .timeline-title { font-size: 0.95rem; line-height: 1.35; margin-bottom: 0.5rem; }
+.timeline-edu .timeline-company { color: var(--teal); }
+.timeline-edu .timeline-desc { font-size: 0.8rem; line-height: 1.6; }
+
+@media (max-width: 1100px) {
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .about-info { position: static; }
+}
+@media (max-width: 640px) {
+  .timeline-edu { grid-template-columns: 1fr; }
+  .timeline-item { padding: 1.15rem; }
+}
 
 /* FOOTER */
 footer {
@@ -1187,11 +1258,12 @@ body::after {
 
   <div class="about-grid">
     <div class="about-info reveal">
+     <div class="about-card">
       <p>
         Passionné par la <strong>cybersécurité</strong> et les technologies biométriques, je construis des systèmes d'authentification robustes pour l'Afrique de demain.
       </p>
       <p>
-        Étudiant en Master <strong>BDGL (Big Data & Génie Logiciel)</strong> à l'UFHB d'Abidjan, je combine rigueur académique et expérience terrain   avec BiométrieX déjà en production chez <strong>Orange CI</strong>.
+        Étudiant en Master <strong>BDGL (Big Data & Génie Logiciel)</strong> à l'UFHB d'Abidjan, je combine rigueur académique et expérience terrain — avec <strong>BiométrieX</strong> déjà en production chez <strong>Orange CI</strong> et <strong>UNACOOPEC CI</strong>.
       </p>
       <div class="about-contact" id="contact">
         <div class="contact-item">
@@ -1223,7 +1295,7 @@ body::after {
           <span>GitLab : <a href="https://gitlab.com/leonely001" target="_blank" rel="noopener">gitlab.com/leonely001</a></span>
         </div>
       </div>
-
+     </div>
     </div>
 
     <div class="timeline-column reveal">
