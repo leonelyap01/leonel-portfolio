@@ -433,9 +433,58 @@ section {
   background: var(--bg);
   transform: translateX(-50%);
 }
-.timeline-year { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); margin-bottom: 0.35rem; }
-.timeline-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem; }
-.timeline-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+.timeline-year {
+  font-family: var(--font-mono); font-size: 0.72rem;
+  color: var(--accent); margin-bottom: 0.4rem;
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  letter-spacing: 0.02em;
+}
+.timeline-year i { font-size: 0.78rem; }
+.timeline-title {
+  font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+.timeline-company { color: var(--accent); font-weight: 700; }
+.timeline-tag {
+  display: inline-block;
+  font-family: var(--font-mono); font-size: 0.62rem;
+  padding: 0.15rem 0.45rem; border-radius: 0.25rem;
+  background: rgba(45,207,140,0.08);
+  color: var(--green);
+  border: 1px solid rgba(45,207,140,0.25);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  vertical-align: middle;
+  margin-left: 0.25rem;
+}
+.timeline-desc { font-size: 0.88rem; color: #9A9890; line-height: 1.7; }
+.timeline-desc strong { color: var(--text); font-weight: 600; }
+.timeline-list {
+  list-style: none;
+  margin-top: 0.6rem;
+  padding-left: 0;
+}
+.timeline-list li {
+  position: relative;
+  padding-left: 1.1rem;
+  margin-bottom: 0.45rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.timeline-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.55rem;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.7;
+}
+.timeline-stack {
+  display: flex; flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.8rem;
+}
 
 /* FOOTER */
 footer {
@@ -1147,29 +1196,54 @@ body::after {
 
     <div class="timeline reveal">
       <div class="timeline-item">
-        <div class="timeline-year">2026 — Présent</div>
-        <div class="timeline-title">BiométrieX · Orange Côte d'Ivoire , UNACOOPEC CI · ALLO 101</div>
-        <div class="timeline-desc">Déploiement en production d'un système d'authentification biométrique complet — Spring Boot, JavaCard, Keycloak, Docker Compose.</div>
+        <div class="timeline-year"><i class="fa-solid fa-briefcase"></i> Novembre 2025 — Présent · Abidjan, CI</div>
+        <div class="timeline-title">Consultant Ingénieur Logiciel · <span class="timeline-company">Groupe Défis et Stratégie</span> <span class="timeline-tag">CDD</span></div>
+        <div class="timeline-desc">
+          Conception et déploiement de plateformes biométriques en production pour des clients grands comptes :
+          <ul class="timeline-list">
+            <li><strong>BiométrieX</strong> (Orange CI, ALLO 101) — authentification par carte à puce JavaCard + empreinte SecuGen, chiffrement ECDH, SSO Keycloak.</li>
+            <li><strong>BioTransac</strong> (UNACOOPEC CI) — transactions biométriques à la caisse (versements/retraits), intégration CBS, tableau de bord temps réel, détection d'anomalies, reçus PDF, sécurité JWT/OIDC.</li>
+            <li><strong>Gestion Cartes</strong> (UNACOOPEC CI) — cycle de vie complet des cartes bancaires & badges agent, production en lots, enrôlement biométrique, applets JavaCard, conformité GIM-UEMOA.</li>
+          </ul>
+        </div>
       </div>
+
       <div class="timeline-item">
-        <div class="timeline-year">2025 — Présent</div>
-        <div class="timeline-title">Master 1 BDGL · UFHB Abidjan</div>
+        <div class="timeline-year"><i class="fa-solid fa-graduation-cap"></i> 2025 — Présent · UFHB Abidjan</div>
+        <div class="timeline-title">Master BDGL · <span class="timeline-company">Université Félix Houphouët-Boigny</span></div>
         <div class="timeline-desc">Base de données & Génie Logiciel. Promotion 2025-2026. Spécialisation en cybersécurité et architectures distribuées.</div>
       </div>
+
       <div class="timeline-item">
-        <div class="timeline-year">2025</div>
-        <div class="timeline-title">BioTransac — Projet FinTech</div>
-        <div class="timeline-desc">Conception d'une solution de paiement biométrique par badge NFC + empreinte digitale, ciblant les marchés africains.</div>
+        <div class="timeline-year"><i class="fa-solid fa-briefcase"></i> Janvier 2025 — Septembre 2025 · Abidjan, CI</div>
+        <div class="timeline-title">Développeur Full Stack Java / Spring Boot · Angular · <span class="timeline-company">ATOS</span> <span class="timeline-tag">CDD</span></div>
+        <div class="timeline-desc">
+          Développement d'applications microservices pour clients entreprise. Conception d'API REST, intégration Keycloak, déploiements containerisés et pipelines CI/CD complets.
+          <div class="timeline-stack">
+            <span class="tech-tag">Spring Boot</span>
+            <span class="tech-tag">Spring Cloud</span>
+            <span class="tech-tag">Angular</span>
+            <span class="tech-tag">PostgreSQL</span>
+            <span class="tech-tag">Keycloak</span>
+            <span class="tech-tag">Docker</span>
+            <span class="tech-tag">Kubernetes</span>
+            <span class="tech-tag">ArgoCD</span>
+            <span class="tech-tag">GitLab CI/CD</span>
+            <span class="tech-tag">Microservices</span>
+          </div>
+        </div>
       </div>
+
       <div class="timeline-item">
-        <div class="timeline-year">2025</div>
-        <div class="timeline-title">Mon Bus — App Transport Abidjan</div>
-        <div class="timeline-desc">Développement d'une application mobile pour le suivi temps réel des bus SOTRA, paiement intégré et ticket QR.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-year">En apprentissage</div>
-        <div class="timeline-title">DevOps · Kubernetes · CI/CD</div>
-        <div class="timeline-desc">Montée en compétences sur l'orchestration de conteneurs, les pipelines CI/CD et l'infrastructure cloud.</div>
+        <div class="timeline-year"><i class="fa-solid fa-briefcase"></i> 2023 — 2024 · Abidjan, CI</div>
+        <div class="timeline-title">Développeur & Testeur QA · <span class="timeline-company">Groupe Défis et Stratégie</span> <span class="timeline-tag">CDD</span></div>
+        <div class="timeline-desc">
+          Projet <strong>SIGE MENA</strong> (Système Intégré de Gestion de l'Éducation).
+          <ul class="timeline-list">
+            <li>Tests fonctionnels et automatisés avec Robot Framework et Python sur les modules critiques.</li>
+            <li>Développement et maintenance de fonctionnalités sur <strong>OpenEMIS</strong>, plateforme open-source de gestion scolaire.</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
