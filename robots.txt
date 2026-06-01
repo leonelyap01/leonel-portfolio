@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Empêcher l'indexation du CV par les bots de scraping (best-effort)
+Disallow: /cv-leonel-yapi.pdf
+
+Sitemap: https://leonelyap01.github.io/leonel-portfolio/sitemap.xml

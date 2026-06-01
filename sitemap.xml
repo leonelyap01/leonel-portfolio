@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://leonelyap01.github.io/leonel-portfolio/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://leonelyap01.github.io/leonel-portfolio/photo.jpeg</image:loc>
+      <image:caption>Leonel Yapi — Ingénieur Logiciel</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://leonelyap01.github.io/leonel-portfolio/og-image.jpg</image:loc>
+      <image:caption>Leonel Yapi · Portfolio Cybersécurité Biométrique</image:caption>
+    </image:image>
+  </url>
+</urlset>
