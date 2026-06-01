@@ -663,35 +663,15 @@ section {
   overflow: hidden;
   background: var(--surface2);
   border: 1px solid var(--border);
-  cursor: none;
-  transition: border-color 0.3s, transform 0.3s;
+  pointer-events: none;
 }
-.shot:hover { border-color: var(--accent); transform: translateY(-2px); }
 .shot img {
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  user-select: none;
+  -webkit-user-drag: none;
 }
-.shot:hover img { transform: scale(1.04); }
-.shot::after {
-  content: '\f00e';
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 900;
-  position: absolute;
-  bottom: 0.5rem; right: 0.5rem;
-  width: 28px; height: 28px;
-  background: rgba(10,10,11,0.7);
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--border2);
-  border-radius: 0.4rem;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--accent);
-  font-size: 0.75rem;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.shot:hover::after { opacity: 1; }
 
 /* Lightbox */
 .lightbox {
@@ -744,9 +724,9 @@ section {
   overflow: hidden;
   border: 1px solid var(--border);
   position: relative;
-  cursor: none;
   max-width: 100%;
   aspect-ratio: 16 / 9;
+  pointer-events: none;
 }
 .timeline-screenshot picture {
   display: block;
@@ -757,28 +737,9 @@ section {
   display: block;
   object-fit: cover;
   object-position: top center;
-  transition: transform 0.4s;
+  user-select: none;
+  -webkit-user-drag: none;
 }
-.timeline-screenshot::after {
-  content: '\f00e';
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 900;
-  position: absolute;
-  bottom: 0.5rem; right: 0.5rem;
-  width: 28px; height: 28px;
-  background: rgba(10,10,11,0.7);
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--border2);
-  border-radius: 0.4rem;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--accent);
-  font-size: 0.75rem;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.timeline-screenshot:hover { border-color: var(--accent); }
-.timeline-screenshot:hover img { transform: scale(1.02); }
-.timeline-screenshot:hover::after { opacity: 1; }
 @media (max-width: 640px) {
   .timeline-screenshot { aspect-ratio: 4 / 3; }
 }
@@ -1634,19 +1595,19 @@ body::after {
           <span class="tech-tag">PC/SC ISO 7816-4</span>
         </div>
         <div class="project-screenshots triple">
-          <div class="shot js-lightbox" data-img="screenshot-biometriex-orange.jpg" data-caption="BiométrieX — Déploiement Orange CI">
+          <div class="shot" data-img="screenshot-biometriex-orange.jpg" data-caption="BiométrieX — Déploiement Orange CI">
             <picture>
               <source srcset="screenshot-biometriex-orange.webp" type="image/webp">
               <img src="screenshot-biometriex-orange.jpg" alt="BiométrieX déployé chez Orange CI" width="1600" height="900" loading="lazy">
             </picture>
           </div>
-          <div class="shot js-lightbox" data-img="screenshot-biometriex-badges.jpg" data-caption="BiométrieX — Gestion des badges">
+          <div class="shot" data-img="screenshot-biometriex-badges.jpg" data-caption="BiométrieX — Gestion des badges">
             <picture>
               <source srcset="screenshot-biometriex-badges.webp" type="image/webp">
               <img src="screenshot-biometriex-badges.jpg" alt="Interface de gestion des badges biométriques" width="1600" height="924" loading="lazy">
             </picture>
           </div>
-          <div class="shot js-lightbox" data-img="screenshot-biometriex-login.jpg" data-caption="BiométrieX — Authentification">
+          <div class="shot" data-img="screenshot-biometriex-login.jpg" data-caption="BiométrieX — Authentification">
             <picture>
               <source srcset="screenshot-biometriex-login.webp" type="image/webp">
               <img src="screenshot-biometriex-login.jpg" alt="Écran d'authentification BiométrieX" width="1600" height="930" loading="lazy">
@@ -1683,7 +1644,7 @@ body::after {
           <span class="tech-tag">PDF</span>
         </div>
         <div class="project-screenshots single">
-          <div class="shot js-lightbox" data-img="screenshot-biotransac.jpg" data-caption="BioTransac — Transactions biométriques au guichet UNACOOPEC CI">
+          <div class="shot" data-img="screenshot-biotransac.jpg" data-caption="BioTransac — Transactions biométriques au guichet UNACOOPEC CI">
             <picture>
               <source srcset="screenshot-biotransac.webp" type="image/webp">
               <img src="screenshot-biotransac.jpg" alt="Interface BioTransac — guichet UNACOOPEC" width="1552" height="1202" loading="lazy">
@@ -1972,7 +1933,7 @@ body::after {
               <li>Tests fonctionnels et automatisés avec Robot Framework et Python sur les modules critiques.</li>
               <li>Développement et maintenance de fonctionnalités sur <strong>OpenEMIS</strong>, plateforme open-source de gestion scolaire.</li>
             </ul>
-            <div class="timeline-screenshot js-lightbox" data-img="screenshot-sige-mena.jpg" data-caption="SIGE MENA — Système Intégré de Gestion de l'Éducation">
+            <div class="timeline-screenshot" data-img="screenshot-sige-mena.jpg" data-caption="SIGE MENA — Système Intégré de Gestion de l'Éducation">
               <picture>
                 <source srcset="screenshot-sige-mena.webp" type="image/webp">
                 <img src="screenshot-sige-mena.jpg" alt="Capture du système SIGE MENA" width="1600" height="910" loading="lazy">
