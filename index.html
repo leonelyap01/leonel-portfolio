@@ -791,6 +791,149 @@ nav.scrolled {
   border-color: var(--accent);
 }
 
+/* CV REQUEST MODAL */
+.cv-modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(10,10,11,0.85);
+  backdrop-filter: blur(8px);
+  z-index: 9000;
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.cv-modal-backdrop.open { display: flex; opacity: 1; }
+.cv-modal {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 1.25rem;
+  max-width: 500px;
+  width: 100%;
+  padding: 2.25rem;
+  position: relative;
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
+}
+.cv-modal-backdrop.open .cv-modal { transform: translateY(0) scale(1); }
+.cv-modal::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2), var(--teal));
+}
+.cv-modal-close {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  display: flex; align-items: center; justify-content: center;
+  cursor: none;
+  font-size: 0.85rem;
+  transition: color 0.2s, border-color 0.2s, transform 0.2s;
+}
+.cv-modal-close:hover { color: var(--text); border-color: var(--accent); transform: rotate(90deg); }
+.cv-modal-icon {
+  width: 56px; height: 56px;
+  border-radius: 1rem;
+  background: rgba(232,101,26,0.1);
+  border: 1px solid rgba(232,101,26,0.25);
+  color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.cv-modal h3 {
+  font-size: 1.5rem; font-weight: 800;
+  margin-bottom: 0.4rem;
+  line-height: 1.25;
+}
+.cv-modal p {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+.cv-form { display: flex; flex-direction: column; gap: 0.85rem; }
+.cv-field { display: flex; flex-direction: column; gap: 0.35rem; }
+.cv-field label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.cv-field label .req { color: var(--accent); }
+.cv-field input, .cv-field textarea {
+  font-family: var(--font-head);
+  font-size: 0.9rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.7rem 0.9rem;
+  border-radius: 0.5rem;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.cv-field input:focus, .cv-field textarea:focus {
+  border-color: var(--accent);
+  background: var(--bg);
+}
+.cv-field textarea { resize: vertical; min-height: 70px; font-family: var(--font-mono); font-size: 0.82rem; }
+.cv-submit {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.85rem 1.5rem;
+  border: none; border-radius: 0.5rem;
+  font-weight: 700;
+  font-family: var(--font-head);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  cursor: none;
+  transition: background 0.2s, transform 0.2s;
+}
+.cv-submit:hover { background: var(--accent2); transform: translateY(-2px); }
+.cv-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+.cv-status {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-align: center;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  display: none;
+}
+.cv-status.success {
+  display: block;
+  color: var(--green);
+  background: rgba(45,207,140,0.08);
+  border: 1px solid rgba(45,207,140,0.25);
+}
+.cv-status.error {
+  display: block;
+  color: #ff6b6b;
+  background: rgba(255,107,107,0.08);
+  border: 1px solid rgba(255,107,107,0.25);
+}
+.cv-modal-note {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.5;
+}
+.cv-modal-note i { color: var(--green); margin-right: 0.3rem; }
+@media (max-width: 640px) {
+  .cv-modal { padding: 1.5rem; }
+  .cv-modal h3 { font-size: 1.25rem; }
+}
+
 /* WHATSAPP FAB */
 .whatsapp-fab {
   position: fixed;
@@ -1029,6 +1172,42 @@ body::after {
 
 <div class="scroll-progress" id="scrollProgress"></div>
 
+<!-- CV REQUEST MODAL -->
+<div class="cv-modal-backdrop" id="cvModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="cvModalTitle">
+  <div class="cv-modal">
+    <button class="cv-modal-close" id="cvModalClose" aria-label="Fermer"><i class="fa-solid fa-xmark"></i></button>
+    <div class="cv-modal-icon"><i class="fa-solid fa-file-pdf"></i></div>
+    <h3 id="cvModalTitle">Télécharger mon CV</h3>
+    <p>Juste quelques infos rapides pour que je puisse vous recontacter si nécessaire — le téléchargement démarre dès l'envoi.</p>
+
+    <form class="cv-form" id="cvForm" action="https://formspree.io/f/REMPLACER_PAR_TON_ID_FORMSPREE" method="POST">
+      <div class="cv-field">
+        <label for="cvName">Nom complet <span class="req">*</span></label>
+        <input type="text" id="cvName" name="name" required placeholder="Jean Dupont">
+      </div>
+      <div class="cv-field">
+        <label for="cvEmail">Email professionnel <span class="req">*</span></label>
+        <input type="email" id="cvEmail" name="email" required placeholder="jean@entreprise.com">
+      </div>
+      <div class="cv-field">
+        <label for="cvCompany">Société / Organisation</label>
+        <input type="text" id="cvCompany" name="company" placeholder="Orange CI, Atos, freelance…">
+      </div>
+      <div class="cv-field">
+        <label for="cvReason">Motif (optionnel)</label>
+        <textarea id="cvReason" name="reason" placeholder="Recrutement, partenariat, freelance…"></textarea>
+      </div>
+      <input type="hidden" name="_subject" value="Nouvelle demande de CV depuis le portfolio">
+      <input type="text" name="_gotcha" style="display:none">
+      <button type="submit" class="cv-submit magnetic" id="cvSubmit">
+        <i class="fa-solid fa-download"></i> Recevoir le CV
+      </button>
+      <div class="cv-status" id="cvStatus"></div>
+      <div class="cv-modal-note"><i class="fa-solid fa-shield-halved"></i> Vos infos restent strictement confidentielles.</div>
+    </form>
+  </div>
+</div>
+
 <!-- WhatsApp floating button -->
 <a href="https://wa.me/2250768124234?text=Bonjour%20Leonel%2C%20j'ai%20vu%20ton%20portfolio%20et%20je%20souhaite%20discuter."
    class="whatsapp-fab"
@@ -1052,7 +1231,7 @@ body::after {
     <a href="#contact">Contact</a>
   </div>
   <div class="nav-actions">
-    <a href="cv-leonel-yapi.pdf" download class="nav-cv" title="Télécharger mon CV"><i class="fa-solid fa-download"></i> CV</a>
+    <a href="#" class="nav-cv js-cv-trigger" title="Demander mon CV"><i class="fa-solid fa-download"></i> CV</a>
     <a href="mailto:leonelyapi30@gmail.com" class="nav-cta">Me contacter <i class="fa-solid fa-arrow-right"></i></a>
   </div>
 </nav>
@@ -1072,7 +1251,7 @@ body::after {
     </p>
     <div class="hero-btns fade-in-up delay-3">
       <a href="#projets" class="btn-primary magnetic">Voir mes projets <i class="fa-solid fa-arrow-right"></i></a>
-      <a href="cv-leonel-yapi.pdf" download class="btn-ghost magnetic"><i class="fa-solid fa-download"></i> Télécharger mon CV</a>
+      <a href="#" class="btn-ghost magnetic js-cv-trigger"><i class="fa-solid fa-download"></i> Télécharger mon CV</a>
       <a href="mailto:leonelyapi30@gmail.com" class="btn-ghost magnetic"><i class="fa-regular fa-envelope"></i> Me contacter</a>
     </div>
   </div>
@@ -1385,7 +1564,7 @@ body::after {
         </div>
         <div class="contact-item">
           <i class="fa-solid fa-file-pdf contact-ico"></i>
-          <span>CV : <a href="cv-leonel-yapi.pdf" download>Télécharger le PDF</a></span>
+          <span>CV : <a href="#" class="js-cv-trigger">Télécharger le PDF</a></span>
         </div>
         <div class="contact-item">
           <i class="fa-brands fa-github contact-ico"></i>
@@ -1656,7 +1835,7 @@ const counterObs = new IntersectionObserver(entries => {
 document.querySelectorAll('.stat-num').forEach(el => counterObs.observe(el));
 
 /* SMOOTH ANCHOR SCROLL */
-document.querySelectorAll('a[href^="#"]').forEach(a => {
+document.querySelectorAll('a[href^="#"]:not(.js-cv-trigger)').forEach(a => {
   a.addEventListener('click', e => {
     const id = a.getAttribute('href');
     if (id.length < 2) return;
@@ -1665,6 +1844,74 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     e.preventDefault();
     t.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+});
+
+/* CV REQUEST MODAL */
+const cvModal = document.getElementById('cvModalBackdrop');
+const cvForm = document.getElementById('cvForm');
+const cvStatus = document.getElementById('cvStatus');
+const cvSubmit = document.getElementById('cvSubmit');
+const CV_FILE = 'cv-leonel-yapi.pdf';
+
+function openCvModal() {
+  cvModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('cvName')?.focus(), 350);
+}
+function closeCvModal() {
+  cvModal.classList.remove('open');
+  document.body.style.overflow = '';
+  cvStatus.className = 'cv-status';
+  cvStatus.textContent = '';
+}
+document.querySelectorAll('.js-cv-trigger').forEach(t => {
+  t.addEventListener('click', e => { e.preventDefault(); openCvModal(); });
+});
+document.getElementById('cvModalClose').addEventListener('click', closeCvModal);
+cvModal.addEventListener('click', e => { if (e.target === cvModal) closeCvModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && cvModal.classList.contains('open')) closeCvModal(); });
+
+function triggerDownload() {
+  const a = document.createElement('a');
+  a.href = CV_FILE;
+  a.download = CV_FILE;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+cvForm.addEventListener('submit', async e => {
+  e.preventDefault();
+  cvSubmit.disabled = true;
+  cvSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Envoi...';
+  cvStatus.className = 'cv-status';
+
+  const action = cvForm.getAttribute('action');
+  const isConfigured = action && !action.includes('REMPLACER_PAR_TON_ID_FORMSPREE');
+
+  try {
+    if (isConfigured) {
+      const formData = new FormData(cvForm);
+      const res = await fetch(action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (!res.ok) throw new Error('Erreur réseau');
+    }
+    cvStatus.className = 'cv-status success';
+    cvStatus.innerHTML = '<i class="fa-solid fa-check"></i> Merci ! Téléchargement en cours...';
+    setTimeout(() => {
+      triggerDownload();
+      setTimeout(closeCvModal, 1500);
+    }, 600);
+  } catch (err) {
+    cvStatus.className = 'cv-status error';
+    cvStatus.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Erreur d\'envoi. Réessayez ou contactez-moi par email.';
+  } finally {
+    cvSubmit.disabled = false;
+    cvSubmit.innerHTML = '<i class="fa-solid fa-download"></i> Recevoir le CV';
+  }
 });
 </script>
 </body>
