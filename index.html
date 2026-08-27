@@ -1149,6 +1149,12 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 }
 .form-status.is-ok  { display: block; color: var(--green); background: rgba(45,207,140,0.08); border: 1px solid rgba(45,207,140,0.24); }
 .form-status.is-err { display: block; color: #FF6B6B; background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.24); }
+/* Envoi echoue mais CV quand meme delivre : ni succes vert, ni erreur rouge. */
+.form-status.is-warn {
+  display: block; color: var(--accent-2);
+  background: rgba(245,166,35,0.08); border: 1px solid rgba(245,166,35,0.26);
+  line-height: 1.6; text-align: left;
+}
 .form-note {
   margin-top: 0.85rem; text-align: center; line-height: 1.6;
   font-family: var(--font-mono); font-size: 0.66rem; color: var(--text-3);
@@ -2333,24 +2339,45 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
     submit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Envoi…';
     status.className = 'form-status';
 
+    /* Le visiteur a rempli ce formulaire pour obtenir le CV : il repart avec,
+       que la notification me parvienne ou non. L'envoi Formspree est un bonus
+       pour le proprietaire du site, pas une condition pour le visiteur. */
+    let delivered = true;
     try {
       const res = await fetch(form.action, {
         method: 'POST',
         body: new FormData(form),
         headers: { 'Accept': 'application/json' }
       });
-      if (!res.ok) throw new Error('Réponse ' + res.status);
+      if (!res.ok) {
+        /* Formspree renvoie la raison en JSON (reCAPTCHA actif, quota depasse,
+           formulaire desactive...). On la journalise pour pouvoir diagnostiquer
+           sans avoir a rejouer une soumission. */
+        let reason = 'HTTP ' + res.status;
+        try {
+          const data = await res.json();
+          if (data && data.error) reason = data.error;
+          else if (data && data.errors) reason = data.errors.map(x => x.message).join(' | ');
+        } catch (_) {}
+        throw new Error(reason);
+      }
+    } catch (err) {
+      delivered = false;
+      console.warn('[CV] Notification non transmise :', err.message);
+    }
 
+    if (delivered) {
       status.className = 'form-status is-ok';
       status.innerHTML = '<i class="fa-solid fa-check"></i> Merci ! Téléchargement en cours…';
-      setTimeout(() => { download(); setTimeout(closeModal, 1500); }, 600);
-    } catch (err) {
-      status.className = 'form-status is-err';
-      status.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Erreur d\'envoi. Réessayez ou écrivez-moi par email.';
-    } finally {
-      submit.disabled = false;
-      submit.innerHTML = '<i class="fa-solid fa-download"></i> Recevoir le CV';
+    } else {
+      status.className = 'form-status is-warn';
+      status.innerHTML = `<i class="fa-solid fa-circle-info"></i> Téléchargement en cours…`
+        + `<br>Votre message n’a pas pu m’être transmis — écrivez-moi à leonelyapi30@gmail.com.`;
     }
+    setTimeout(() => { download(); setTimeout(closeModal, delivered ? 1500 : 4500); }, 600);
+
+    submit.disabled = false;
+    submit.innerHTML = '<i class="fa-solid fa-download"></i> Recevoir le CV';
   });
 
   /* ---------- Ancres douces ---------- */
