@@ -264,6 +264,44 @@ body.cursor-off { cursor: auto; }
 body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 
 /* ============================================================
+   AMBIANCE — champ de particules + halo de curseur
+
+   Les deux calques sont peints AU-DESSUS des fonds de section.
+   C'est volontaire : les bandes sont opaques, un calque place
+   derriere elles ne serait visible que dans le hero. Poses par
+   dessus, comme le grain, les points restent perceptibles sur
+   toute la page. Leur taille et leur opacite sont assez faibles
+   pour ne jamais genrer la lecture.
+   ============================================================ */
+.particles {
+  position: fixed; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 890;
+  opacity: 0;
+  transition: opacity 1.4s var(--ease);
+}
+.particles.is-live { opacity: 1; }
+
+.spotlight {
+  position: fixed; top: 0; left: 0;
+  width: 640px; height: 640px;
+  margin: -320px 0 0 -320px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(255,107,26,0.065) 0%,
+    rgba(255,107,26,0.028) 34%,
+    rgba(255,107,26,0.008) 54%,
+    transparent 68%);
+  pointer-events: none;
+  z-index: 880;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease);
+  will-change: transform;
+}
+.spotlight.is-live { opacity: 1; }
+
+/* ============================================================
    BARRE DE PROGRESSION
    ============================================================ */
 .scroll-progress {
@@ -278,21 +316,30 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
    NAVIGATION
    ============================================================ */
 .nav {
-  position: fixed; top: 0; left: 0; right: 0;
+  position: fixed;
+  top: 0.85rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 2 * var(--gutter));
+  max-width: var(--maxw);
   z-index: 200;
   display: flex; align-items: center; justify-content: space-between;
   gap: 1rem;
-  padding: 1.15rem var(--gutter);
-  background: rgba(8,8,10,0.72);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-  border-bottom: 1px solid transparent;
-  transition: padding 0.3s var(--ease), background 0.3s, border-color 0.3s;
+  padding: 0.5rem 0.5rem 0.5rem 1.35rem;
+  border-radius: 2.5rem;
+  border: 1px solid var(--line-2);
+  background: rgba(13,13,16,0.72);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.05);
+  transition: top 0.35s var(--ease), padding 0.35s var(--ease),
+              background 0.3s, box-shadow 0.35s, max-width 0.35s var(--ease);
 }
 .nav.is-scrolled {
-  padding-top: 0.7rem; padding-bottom: 0.7rem;
-  background: rgba(8,8,10,0.9);
-  border-bottom-color: var(--line);
+  top: 0.55rem;
+  padding-top: 0.4rem; padding-bottom: 0.4rem;
+  background: rgba(13,13,16,0.9);
+  box-shadow: 0 14px 44px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06);
 }
 
 .nav-logo {
@@ -314,13 +361,13 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
   padding: 0.5rem 0.85rem; border-radius: var(--r-xs);
   transition: color 0.2s, background 0.2s;
 }
-.nav-links a .idx {
-  color: var(--text-3); font-size: 0.65rem; margin-right: 0.4rem;
+.nav-links a i {
+  color: var(--text-3); font-size: 0.8rem; margin-right: 0.45rem;
   transition: color 0.2s;
 }
 .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
 .nav-links a[aria-current="true"] { color: var(--accent); }
-.nav-links a[aria-current="true"] .idx { color: var(--accent); opacity: 0.7; }
+.nav-links a[aria-current="true"] i { color: var(--accent); }
 
 .nav-actions { display: flex; align-items: center; gap: 0.55rem; flex-shrink: 0; }
 
@@ -527,6 +574,36 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
   0%, 100% { transform: scale(1) translateY(0); opacity: 1; }
   50%      { transform: scale(1.12) translateY(-24px); opacity: 0.72; }
 }
+
+/* ============================================================
+   SCENE 3D DU HERO (WebGL)
+
+   Le canvas occupe tout le hero mais est masque en degrade sur la
+   gauche : la carte a puce derive cote droit, le texte reste sur du
+   noir franc. Aucun compromis de lisibilite.
+
+   Il n'apparait que si le script Three.js a pu s'initialiser
+   (classe .is-live posee par le JS) ; sinon le halo radial existant
+   reste seul, exactement comme avant.
+   ============================================================ */
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.2s var(--ease);
+  /* Le degrade protege la colonne de texte */
+  mask-image: linear-gradient(90deg, transparent 0%, transparent 22%, #000 44%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 22%, #000 44%);
+}
+.hero-canvas.is-live { opacity: 1; }
+/* Le contenu du hero passe devant la scene */
+.hero > .hero-text, .hero > .hero-portrait { position: relative; z-index: 1; }
+
 
 .status {
   display: inline-flex; align-items: center; gap: 0.6rem;
@@ -771,13 +848,29 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
    ============================================================ */
 .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
 
-.project { display: flex; flex-direction: column; overflow: hidden; }
+/* Pas d'overflow:hidden ici : il forcerait transform-style a  flat  et
+   annulerait toute la profondeur 3D interne des cartes. La barre d'accent
+   porte donc son propre arrondi. */
+.project { display: flex; flex-direction: column; }
 .project-top {
   padding: 1.75rem 1.75rem 1.25rem;
   border-bottom: 1px solid var(--line);
   position: relative;
 }
-.project-bar { position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+/* La bande d'accent est peinte comme FOND d'un bloc pleine taille :
+   le fond est clippe par le border-radius, donc la bande epouse les
+   coins arrondis. Une bande de 2px de haut, elle, depassait aux coins. */
+.project-bar {
+  position: absolute; inset: 0;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  background-repeat: no-repeat;
+  background-position: top left;
+  background-size: 100% 2px;
+  pointer-events: none;
+}
+/* Sur la carte vedette, .project-top n'est que la colonne gauche :
+   seul son coin superieur gauche coincide avec celui de la carte. */
+.project.is-featured .project-bar { border-radius: var(--r-lg) 0 0 0; }
 .project-badge {
   display: inline-flex; align-items: center; gap: 0.4rem;
   font-family: var(--font-mono); font-size: 0.65rem;
@@ -1213,6 +1306,89 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 @keyframes fade-up { to { opacity: 1; transform: none; } }
 
 /* ============================================================
+   PROFONDEUR 3D (CSS pur, aucune librairie)
+
+   Le tilt JS applique deja une rotation a la carte. Ici on donne
+   une epaisseur reelle a son contenu : chaque element interne est
+   pousse sur son propre plan Z, donc il se decale par rapport aux
+   autres quand la carte pivote. C'est ce decalage — la parallaxe —
+   qui fait lire du volume plutot qu'une simple inclinaison.
+
+   Reserve au pointeur fin : sans survol, rien de tout ceci ne
+   s'active, et le rendu tactile reste strictement plat.
+   ============================================================ */
+@media (hover: hover) and (pointer: fine) {
+  .card.tilt { transform-style: preserve-3d; }
+
+  .card.tilt .project-badge,
+  .card.tilt .project-title,
+  .card.tilt .project-sub,
+  .card.tilt .project-desc,
+  .card.tilt .project-stack,
+  .card.tilt .shots,
+  .card.tilt .featured-meta,
+  .card.tilt .project-foot,
+  .card.tilt .skill-icon,
+  .card.tilt .skill-name,
+  .card.tilt .skill-cat,
+  .card.tilt .skill-note,
+  .card.tilt .skill-list {
+    transition: transform 0.45s var(--ease);
+    transform: translateZ(0);
+  }
+
+  /* Etagement : plus l'element est important, plus il avance */
+  .card.tilt:hover .project-badge  { transform: translateZ(52px); }
+  .card.tilt:hover .project-title  { transform: translateZ(38px); }
+  .card.tilt:hover .project-sub    { transform: translateZ(24px); }
+  .card.tilt:hover .project-desc   { transform: translateZ(18px); }
+  .card.tilt:hover .project-stack  { transform: translateZ(28px); }
+  .card.tilt:hover .shots          { transform: translateZ(34px); }
+  .card.tilt:hover .featured-meta  { transform: translateZ(20px); }
+  .card.tilt:hover .project-foot   { transform: translateZ(14px); }
+
+  .card.tilt:hover .skill-icon { transform: translateZ(56px) scale(1.08) rotate(-6deg); }
+  .card.tilt:hover .skill-cat  { transform: translateZ(20px); }
+  .card.tilt:hover .skill-name { transform: translateZ(34px); }
+  .card.tilt:hover .skill-note { transform: translateZ(20px); }
+  .card.tilt:hover .skill-list { transform: translateZ(26px); }
+
+  /* Ombre portee etagee : c'est elle qui detache la carte du fond */
+  .card.tilt {
+    transition: transform 0.4s var(--ease), border-color 0.3s,
+                box-shadow 0.45s var(--ease);
+  }
+  .card.tilt:hover {
+    box-shadow:
+      0 2px 6px rgba(0,0,0,0.30),
+      0 12px 28px rgba(0,0,0,0.38),
+      0 32px 64px rgba(0,0,0,0.42),
+      0 0 0 1px rgba(255,107,26,0.10);
+  }
+
+  /* Portrait : la photo, les equerres et le liziere avancent
+     sur trois plans distincts. */
+  .hero-portrait { perspective: 1000px; }
+  .portrait-frame {
+    transform-style: preserve-3d;
+    transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+  }
+  .portrait-frame img,
+  .portrait-frame .bracket { transition: transform 0.5s var(--ease); }
+  .hero-portrait:hover .portrait-frame {
+    box-shadow: 0 30px 70px rgba(0,0,0,0.55);
+  }
+  .hero-portrait:hover .portrait-frame img    { transform: translateZ(26px); }
+  .hero-portrait:hover .portrait-frame .bracket { transform: translateZ(52px); }
+
+  /* Chiffres cles : le nombre se detache de son libelle */
+  .metric { perspective: 800px; }
+  .metric-num, .metric-label, .metric-sub { transition: transform 0.4s var(--ease); }
+  .metric:hover .metric-num   { transform: translateZ(30px); }
+  .metric:hover .metric-label { transform: translateZ(14px); }
+}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (max-width: 1180px) {
@@ -1226,6 +1402,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 @media (max-width: 980px) {
   .nav-links { display: none; }
   .nav-burger { display: inline-flex; }
+  .nav { padding-left: 1rem; border-radius: 2rem; }
   .nav-actions .btn-outline { display: none; }
 
   .hero {
@@ -1307,6 +1484,8 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 <a class="skip-link" href="#main">Aller au contenu</a>
 
 <div class="scroll-progress" id="scrollProgress"></div>
+<canvas class="particles" id="particles" aria-hidden="true"></canvas>
+<div class="spotlight" id="spotlight" aria-hidden="true"></div>
 <div class="cursor" id="cursor" aria-hidden="true"></div>
 <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
 
@@ -1315,10 +1494,10 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
   <a href="#" class="nav-logo" aria-label="Leonel Yapi — accueil"><b>LY</b><i>_</i></a>
 
   <nav class="nav-links" id="navLinks" aria-label="Navigation principale">
-    <a href="#projets"><span class="idx">01</span>Projets</a>
-    <a href="#competences"><span class="idx">02</span>Compétences</a>
-    <a href="#parcours"><span class="idx">03</span>Parcours</a>
-    <a href="#contact"><span class="idx">04</span>Contact</a>
+    <a href="#projets"><i class="fa-solid fa-layer-group" aria-hidden="true"></i>Projets</a>
+    <a href="#competences"><i class="fa-solid fa-microchip" aria-hidden="true"></i>Compétences</a>
+    <a href="#parcours"><i class="fa-solid fa-route" aria-hidden="true"></i>Parcours</a>
+    <a href="#contact"><i class="fa-regular fa-envelope" aria-hidden="true"></i>Contact</a>
   </nav>
 
   <div class="nav-actions">
@@ -1361,6 +1540,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 <!-- ============ HERO ============ -->
 <section class="hero" aria-labelledby="heroTitle">
   <div class="hero-glow" aria-hidden="true"></div>
+  <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
 
   <div class="hero-text">
     <p class="status fade-up">
@@ -1488,7 +1668,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
     <!-- BIOMETRIEX — FEATURED -->
     <article class="card project is-featured tilt reveal">
       <div class="project-top">
-        <div class="project-bar" style="background: linear-gradient(90deg, #FF6B1A, #2DCF8C);"></div>
+        <div class="project-bar" style="background-image: linear-gradient(90deg, #FF6B1A, #2DCF8C);"></div>
         <p class="project-badge badge-prod"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Production</p>
         <h3 class="project-title">BiométrieX</h3>
         <p class="project-sub">Authentification biométrique &amp; gestion de badges<br>Orange CI · UNACOOPEC CI · ALLO 101</p>
@@ -1556,7 +1736,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
     <!-- BIOTRANSAC -->
     <article class="card project tilt reveal">
       <div class="project-top">
-        <div class="project-bar" style="background: linear-gradient(90deg, #4A9EFF, #1EC8A8);"></div>
+        <div class="project-bar" style="background-image: linear-gradient(90deg, #4A9EFF, #1EC8A8);"></div>
         <p class="project-badge badge-prod"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Production</p>
         <h3 class="project-title">BioTransac</h3>
         <p class="project-sub">Transactions biométriques · UNACOOPEC CI</p>
@@ -1595,7 +1775,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
     <!-- GESTION CARTES -->
     <article class="card project tilt reveal">
       <div class="project-top">
-        <div class="project-bar" style="background: linear-gradient(90deg, #2DCF8C, #4A9EFF);"></div>
+        <div class="project-bar" style="background-image: linear-gradient(90deg, #2DCF8C, #4A9EFF);"></div>
         <p class="project-badge badge-prod"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Production</p>
         <h3 class="project-title">Gestion Cartes</h3>
         <p class="project-sub">Cycle de vie cartes bancaires · UNACOOPEC CI</p>
@@ -1625,7 +1805,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
     <!-- MON BUS -->
     <article class="card project tilt reveal">
       <div class="project-top">
-        <div class="project-bar" style="background: linear-gradient(90deg, #F5A623, #FF6B1A);"></div>
+        <div class="project-bar" style="background-image: linear-gradient(90deg, #F5A623, #FF6B1A);"></div>
         <p class="project-badge badge-school"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> Projet académique</p>
         <h3 class="project-title">Mon Bus</h3>
         <p class="project-sub">Transport intelligent · Abidjan</p>
@@ -2138,6 +2318,102 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
     });
   }
 
+
+  /* ============================================================
+     AMBIANCE 1 — halo de curseur
+
+     Un simple degrade radial deplace en transform. Pas de
+     mix-blend-mode : sur une surface aussi grande il coute cher
+     en compositing pour un gain quasi nul sur fond sombre.
+     ============================================================ */
+  if (finePointer && !reducedMotion) {
+    const spot = $('#spotlight');
+    let sx = window.innerWidth / 2, sy = window.innerHeight / 2, px = sx, py = sy, shown = false;
+
+    window.addEventListener('mousemove', e => {
+      sx = e.clientX; sy = e.clientY;
+      if (!shown) { shown = true; spot.classList.add('is-live'); }
+    }, { passive: true });
+
+    (function follow() {
+      requestAnimationFrame(follow);
+      px += (sx - px) * 0.09;
+      py += (sy - py) * 0.09;
+      spot.style.transform = 'translate(' + px + 'px, ' + py + 'px)';
+    })();
+  }
+
+  /* ============================================================
+     AMBIANCE 2 — champ de particules
+
+     Canvas 2D volontairement, pas WebGL : pour quelques dizaines
+     de points, le 2D est plus leger et fonctionne meme la ou la
+     scene Three.js est desactivee (mobile, absence de GPU).
+     ============================================================ */
+  if (!reducedMotion) {
+    const cv = $('#particles');
+    const ctx = cv.getContext('2d', { alpha: true });
+    let w = 0, h = 0, dpr = 1, pts = [], running = true;
+
+    function build() {
+      dpr = Math.min(window.devicePixelRatio || 1, finePointer ? 2 : 1.5);
+      w = window.innerWidth; h = window.innerHeight;
+      cv.width = Math.round(w * dpr);
+      cv.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      /* Densite proportionnelle a la surface, plafonnee : sur un
+         grand ecran on ne veut pas multiplier les points a l'infini. */
+      const target = Math.min(finePointer ? 90 : 42,
+                              Math.round((w * h) / 22000));
+      pts = [];
+      for (let i = 0; i < target; i++) {
+        pts.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: 0.5 + Math.random() * 1.3,
+          vx: (Math.random() - 0.5) * 0.13,
+          vy: -0.05 - Math.random() * 0.16,
+          a: 0.10 + Math.random() * 0.32,
+          warm: Math.random() < 0.34
+        });
+      }
+    }
+
+    build();
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(build, 180);
+    }, { passive: true });
+
+    document.addEventListener('visibilitychange', () => { running = !document.hidden; });
+
+    function draw() {
+      requestAnimationFrame(draw);
+      if (!running) return;
+      ctx.clearRect(0, 0, w, h);
+      for (let i = 0; i < pts.length; i++) {
+        const p = pts[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        /* Reinjection par le bas quand le point sort par le haut */
+        if (p.y < -4) { p.y = h + 4; p.x = Math.random() * w; }
+        if (p.x < -4) p.x = w + 4;
+        else if (p.x > w + 4) p.x = -4;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, 6.2832);
+        ctx.fillStyle = p.warm
+          ? 'rgba(255,140,66,' + p.a + ')'
+          : 'rgba(226,222,212,' + (p.a * 0.72) + ')';
+        ctx.fill();
+      }
+    }
+    requestAnimationFrame(draw);
+    cv.classList.add('is-live');
+  }
+
   /* ---------- Nav : état scroll + barre de progression ---------- */
   const nav      = $('#nav');
   const progress = $('#scrollProgress');
@@ -2379,6 +2655,225 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
     submit.disabled = false;
     submit.innerHTML = '<i class="fa-solid fa-download"></i> Recevoir le CV';
   });
+
+
+  /* ============================================================
+     SCENE 3D DU HERO — carte a puce JavaCard (Three.js)
+
+     Chargement paresseux et strictement conditionnel : rien n'est
+     telecharge tant que les quatre conditions ne sont pas reunies
+     (pointeur fin, animations autorisees, ecran large, WebGL
+     disponible). Sur mobile, en mouvement reduit ou sans GPU, la
+     page reste exactement celle d'avant, halo radial compris.
+     ============================================================ */
+  const heroCanvas = $('#heroCanvas');
+
+  function webglSupported() {
+    try {
+      const c = document.createElement('canvas');
+      return !!(window.WebGLRenderingContext &&
+        (c.getContext('webgl') || c.getContext('experimental-webgl')));
+    } catch (e) { return false; }
+  }
+
+  function initHeroScene(THREE) {
+    const hero = document.querySelector('.hero');
+    const renderer = new THREE.WebGLRenderer({
+      canvas: heroCanvas, alpha: true, antialias: true, powerPreference: 'high-performance'
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 0.92;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
+    camera.position.set(0, 0, 6);
+
+    /* ---- Rectangle a coins arrondis, extrude en dalle biseautee ---- */
+    function roundedRect(w, h, r) {
+      const s = new THREE.Shape();
+      s.moveTo(-w / 2 + r, -h / 2);
+      s.lineTo(w / 2 - r, -h / 2);
+      s.quadraticCurveTo(w / 2, -h / 2, w / 2, -h / 2 + r);
+      s.lineTo(w / 2, h / 2 - r);
+      s.quadraticCurveTo(w / 2, h / 2, w / 2 - r, h / 2);
+      s.lineTo(-w / 2 + r, h / 2);
+      s.quadraticCurveTo(-w / 2, h / 2, -w / 2, h / 2 - r);
+      s.lineTo(-w / 2, -h / 2 + r);
+      s.quadraticCurveTo(-w / 2, -h / 2, -w / 2 + r, -h / 2);
+      return s;
+    }
+    function slab(w, h, r, depth) {
+      const g = new THREE.ExtrudeGeometry(roundedRect(w, h, r), {
+        depth: depth, bevelEnabled: true, bevelThickness: depth * 0.25,
+        bevelSize: depth * 0.25, bevelSegments: 2, curveSegments: 14
+      });
+      g.center();
+      return g;
+    }
+
+    const card = new THREE.Group();
+
+    /* ---- Corps : proportions ID-1 (85,6 x 54 mm) ---- */
+    const body = new THREE.Mesh(
+      slab(3.05, 1.92, 0.15, 0.05),
+      new THREE.MeshStandardMaterial({ color: 0x0d0d12, metalness: 0.78, roughness: 0.26 })
+    );
+    card.add(body);
+
+    /* ---- Puce doree ---- */
+    const chip = new THREE.Mesh(
+      slab(0.46, 0.36, 0.05, 0.02),
+      new THREE.MeshStandardMaterial({ color: 0xd9a441, metalness: 0.95, roughness: 0.22 })
+    );
+    chip.position.set(-0.86, 0.12, 0.037);
+    card.add(chip);
+
+    /* Plages de contact dessinees en 2D : le plan a des UV propres,
+       contrairement a la geometrie extrudee. */
+    const padCanvas = document.createElement('canvas');
+    padCanvas.width = 256; padCanvas.height = 200;
+    const pc = padCanvas.getContext('2d');
+    pc.strokeStyle = 'rgba(58,38,8,0.9)';
+    pc.lineWidth = 9;
+    pc.beginPath();
+    pc.moveTo(0, 66); pc.lineTo(96, 66);
+    pc.moveTo(160, 66); pc.lineTo(256, 66);
+    pc.moveTo(0, 134); pc.lineTo(96, 134);
+    pc.moveTo(160, 134); pc.lineTo(256, 134);
+    pc.moveTo(96, 18); pc.lineTo(96, 182);
+    pc.moveTo(160, 18); pc.lineTo(160, 182);
+    pc.stroke();
+    const pads = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.44, 0.34),
+      new THREE.MeshBasicMaterial({
+        map: new THREE.CanvasTexture(padCanvas), transparent: true, opacity: 0.6
+      })
+    );
+    pads.position.set(-0.86, 0.12, 0.05);
+    card.add(pads);
+
+    /* ---- Zone biometrique : cretes d'empreinte imprimees ---- */
+    const fpCanvas = document.createElement('canvas');
+    fpCanvas.width = 256; fpCanvas.height = 256;
+    const fc = fpCanvas.getContext('2d');
+    fc.strokeStyle = 'rgba(255,107,26,0.9)';
+    fc.lineWidth = 3.2;
+    for (let i = 0; i < 9; i++) {
+      fc.beginPath();
+      fc.ellipse(128, 132, 12 + i * 12.5, 18 + i * 13.5, 0, Math.PI * 0.12, Math.PI * 1.88);
+      fc.stroke();
+    }
+    fc.beginPath();
+    fc.ellipse(128, 126, 7, 11, 0, 0, Math.PI * 2);
+    fc.stroke();
+    const fingerprint = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.82, 0.82),
+      new THREE.MeshBasicMaterial({
+        map: new THREE.CanvasTexture(fpCanvas), transparent: true, opacity: 0.6
+      })
+    );
+    fingerprint.position.set(0.82, -0.02, 0.031);
+    card.add(fingerprint);
+
+    /* ---- Liseres orange : la signature de la palette ---- */
+    const accentMat = new THREE.MeshStandardMaterial({
+      color: 0xff6b1a, emissive: 0xff6b1a, emissiveIntensity: 0.9,
+      metalness: 0.2, roughness: 0.4
+    });
+    const stripe = new THREE.Mesh(new THREE.BoxGeometry(3.05, 0.045, 0.012), accentMat);
+    stripe.position.set(0, 0.72, 0.032);
+    card.add(stripe);
+    const tick = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.022, 0.01), accentMat);
+    tick.position.set(-0.86, -0.5, 0.032);
+    card.add(tick);
+
+    card.scale.setScalar(0.70);
+    card.position.set(0.46, 0.66, -1.1);
+    scene.add(card);
+
+    /* ---- Eclairage : cle chaude, remplissage teal, contre-jour ---- */
+    scene.add(new THREE.AmbientLight(0xffffff, 0.16));
+    /* Cle blanche : une cle orange teintait toute la carte en brun. */
+    const key = new THREE.DirectionalLight(0xffffff, 1.5);
+    key.position.set(2.5, 3.2, 4.5);
+    scene.add(key);
+    /* L orange n intervient qu en lumiere rasante, sur les aretes. */
+    const warm = new THREE.PointLight(0xff6b1a, 2.1, 10);
+    warm.position.set(2.6, -1.4, 1.8);
+    scene.add(warm);
+    const cool = new THREE.PointLight(0x1ec8a8, 2.0, 12);
+    cool.position.set(-2.8, 1.6, 1.2);
+    scene.add(cool);
+    const rim = new THREE.DirectionalLight(0xffffff, 0.9);
+    rim.position.set(-1.5, 1.0, -4);
+    scene.add(rim);
+
+    function resize() {
+      const r = hero.getBoundingClientRect();
+      const w = Math.max(1, r.width), h = Math.max(1, r.height);
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    /* ---- Souris, amortie ---- */
+    let tx = 0, ty = 0, cx = 0, cy = 0;
+    window.addEventListener('mousemove', e => {
+      tx = (e.clientX / window.innerWidth - 0.5) * 2;
+      ty = (e.clientY / window.innerHeight - 0.5) * 2;
+    }, { passive: true });
+
+    /* ---- Boucle : suspendue hors ecran et onglet cache ---- */
+    let visible = true, last = performance.now(), t = 0;
+    new IntersectionObserver(es => { visible = es[0].isIntersecting; }, { threshold: 0 }).observe(hero);
+    document.addEventListener('visibilitychange', () => { last = performance.now(); });
+
+    function loop(now) {
+      requestAnimationFrame(loop);
+      if (!visible || document.hidden) { last = now; return; }
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      t += dt;
+
+      cx += (tx - cx) * 0.045;
+      cy += (ty - cy) * 0.045;
+
+      const scrolled = window.scrollY / Math.max(1, window.innerHeight);
+      card.rotation.y = t * 0.22 + cx * 0.55;
+      card.rotation.x = Math.sin(t * 0.5) * 0.14 - cy * 0.32 + scrolled * 0.35;
+      card.rotation.z = Math.sin(t * 0.34) * 0.07;
+      card.position.y = 0.66 + Math.sin(t * 0.75) * 0.08;
+
+      renderer.render(scene, camera);
+    }
+    requestAnimationFrame(loop);
+    heroCanvas.classList.add('is-live');
+  }
+
+  if (heroCanvas && finePointer && !reducedMotion &&
+      window.innerWidth >= 980 && webglSupported()) {
+    const startScene = function () {
+      const tag = document.createElement('script');
+      tag.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+      tag.async = true;
+      tag.onload = function () {
+        try { initHeroScene(window.THREE); }
+        catch (err) { console.warn('[3D] Scene non initialisee :', err.message); }
+      };
+      tag.onerror = function () {
+        console.warn('[3D] Three.js non charge, halo statique conserve.');
+      };
+      document.head.appendChild(tag);
+    };
+    /* La 3D ne doit jamais retarder le contenu utile : on attend
+       la fin du chargement de la page. */
+    if (document.readyState === 'complete') setTimeout(startScene, 200);
+    else window.addEventListener('load', function () { setTimeout(startScene, 200); });
+  }
 
   /* ---------- Ancres douces ---------- */
   $$('a[href^="#"]').forEach(a => {
