@@ -133,10 +133,11 @@
   /* Texte */
   --text:      #F2F0EA;
   --text-2:    #9E9C94;
-  --text-3:    #6E6C66;
+  --text-3:    #8A8780;  /* 4,9:1 minimum sur toutes les surfaces (AA) */
 
   /* Accents */
   --accent:      #FF6B1A;
+  --on-accent:   #0B0B0D;  /* texte sur fond orange : 6,9:1 (le blanc ne faisait que 2,85:1) */
   --accent-2:    #F5A623;
   --accent-dim:  rgba(255,107,26,0.10);
   --accent-line: rgba(255,107,26,0.28);
@@ -210,7 +211,7 @@ body::after {
 .skip-link {
   position: absolute; left: 0.75rem; top: -100px;
   z-index: 10000;
-  background: var(--accent); color: #fff;
+  background: var(--accent); color: var(--on-accent);
   padding: 0.7rem 1.2rem; border-radius: var(--r-sm);
   font-size: 0.85rem; font-weight: 700; text-decoration: none;
   transition: top 0.2s var(--ease);
@@ -387,7 +388,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 .btn-sm { font-size: 0.75rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 2rem; }
 .btn-lg { font-size: 0.92rem; font-weight: 600; padding: 0.9rem 1.6rem; border-radius: var(--r-sm); }
 
-.btn-solid { background: var(--accent); color: #fff; }
+.btn-solid { background: var(--accent); color: var(--on-accent); }
 .btn-solid:hover { background: var(--accent-2); box-shadow: 0 12px 34px rgba(255,107,26,0.3); }
 .btn-outline { border-color: var(--line-2); color: var(--text); }
 .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
@@ -440,7 +441,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 .mobile-menu.is-open nav a:nth-child(3) { transition-delay: 0.18s; }
 .mobile-menu.is-open nav a:nth-child(4) { transition-delay: 0.24s; }
 .mobile-menu nav a span {
-  font-family: var(--font-mono); font-size: 0.7rem;
+  font-family: var(--font-mono); font-size: 0.75rem;
   color: var(--accent); font-weight: 400;
 }
 .mobile-menu-foot { margin-top: auto; display: flex; flex-direction: column; gap: 0.75rem; }
@@ -518,7 +519,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 .section-eyebrow {
   display: flex; align-items: center; gap: 0.85rem;
   font-family: var(--font-mono);
-  font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+  font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--accent);
   margin-bottom: 1.1rem;
 }
@@ -528,7 +529,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
   border: 1px solid var(--accent-line);
   border-radius: var(--r-xs);
   background: var(--accent-dim);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
 }
 .section-eyebrow::after {
   content: ''; flex: 1; height: 1px; max-width: 90px;
@@ -575,39 +576,13 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
   50%      { transform: scale(1.12) translateY(-24px); opacity: 0.72; }
 }
 
-/* ============================================================
-   SCENE 3D DU HERO (WebGL)
-
-   Le canvas occupe tout le hero mais est masque en degrade sur la
-   gauche : la carte a puce derive cote droit, le texte reste sur du
-   noir franc. Aucun compromis de lisibilite.
-
-   Il n'apparait que si le script Three.js a pu s'initialiser
-   (classe .is-live posee par le JS) ; sinon le halo radial existant
-   reste seul, exactement comme avant.
-   ============================================================ */
-.hero-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 1.2s var(--ease);
-  /* Le degrade protege la colonne de texte */
-  mask-image: linear-gradient(90deg, transparent 0%, transparent 22%, #000 44%);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 22%, #000 44%);
-}
-.hero-canvas.is-live { opacity: 1; }
-/* Le contenu du hero passe devant la scene */
+/* Le contenu du hero passe devant le halo */
 .hero > .hero-text, .hero > .hero-portrait { position: relative; z-index: 1; }
 
 
 .status {
   display: inline-flex; align-items: center; gap: 0.6rem;
-  font-family: var(--font-mono); font-size: 0.73rem;
+  font-family: var(--font-mono); font-size: 0.75rem;
   color: var(--green);
   border: 1px solid rgba(45,207,140,0.28);
   background: rgba(45,207,140,0.06);
@@ -666,7 +641,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 
 .hero-trust { border-top: 1px solid var(--line); padding-top: 1.5rem; }
 .hero-trust-label {
-  font-family: var(--font-mono); font-size: 0.66rem;
+  font-family: var(--font-mono); font-size: 0.75rem;
   letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--text-3); margin-bottom: 0.9rem;
 }
@@ -731,11 +706,11 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 }
 .portrait-caption .who { font-size: 1rem; font-weight: 700; letter-spacing: -0.015em; }
 .portrait-caption .what {
-  font-family: var(--font-mono); font-size: 0.72rem;
+  font-family: var(--font-mono); font-size: 0.75rem;
   color: var(--accent); margin-top: 0.2rem;
 }
 .portrait-caption .sig {
-  font-family: var(--font-mono); font-size: 0.62rem;
+  font-family: var(--font-mono); font-size: 0.75rem;
   color: var(--text-3); text-align: right; line-height: 1.5;
   flex-shrink: 0;
 }
@@ -746,7 +721,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
    CHIPS / TAGS — système unique
    ============================================================ */
 .chip {
-  font-family: var(--font-mono); font-size: 0.68rem;
+  font-family: var(--font-mono); font-size: 0.75rem;
   padding: 0.3rem 0.7rem; border-radius: 2rem;
   background: var(--surface-2); color: var(--text-2);
   border: 1px solid var(--line);
@@ -756,7 +731,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 .chip.is-live { color: var(--green); border-color: rgba(45,207,140,0.3); background: rgba(45,207,140,0.06); }
 
 .tag {
-  font-family: var(--font-mono); font-size: 0.66rem;
+  font-family: var(--font-mono); font-size: 0.75rem;
   padding: 0.22rem 0.6rem; border-radius: var(--r-xs);
   background: var(--surface-2); color: var(--text-2);
   border: 1px solid var(--line);
@@ -792,11 +767,11 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 }
 .metric-num .suf { font-size: 0.45em; color: var(--accent-2); }
 .metric-label {
-  font-family: var(--font-mono); font-size: 0.72rem;
+  font-family: var(--font-mono); font-size: 0.75rem;
   color: var(--text-2); margin-top: 0.6rem; line-height: 1.5;
 }
 .metric-sub {
-  font-family: var(--font-mono); font-size: 0.64rem;
+  font-family: var(--font-mono); font-size: 0.75rem;
   color: var(--text-3); margin-top: 0.2rem;
 }
 
@@ -873,7 +848,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 .project.is-featured .project-bar { border-radius: var(--r-lg) 0 0 0; }
 .project-badge {
   display: inline-flex; align-items: center; gap: 0.4rem;
-  font-family: var(--font-mono); font-size: 0.65rem;
+  font-family: var(--font-mono); font-size: 0.75rem;
   padding: 0.22rem 0.65rem; border-radius: 2rem;
   margin-bottom: 1rem;
 }
@@ -886,7 +861,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
   margin-bottom: 0.4rem;
 }
 .project-sub {
-  font-family: var(--font-mono); font-size: 0.73rem;
+  font-family: var(--font-mono); font-size: 0.75rem;
   color: var(--text-2); line-height: 1.6;
 }
 .project-body { padding: 1.4rem 1.75rem; flex: 1; display: flex; flex-direction: column; }
@@ -902,12 +877,14 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
   gap: 0.75rem; flex-wrap: wrap;
   margin-top: auto;
 }
-.project-client { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-2); }
+.project-client { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-2); }
 .project-client strong { color: var(--text); font-weight: 500; }
 .project-live {
-  font-family: var(--font-mono); font-size: 0.68rem; color: var(--green);
+  font-family: var(--font-mono); font-size: 0.75rem; color: var(--green);
   display: inline-flex; align-items: center; gap: 0.35rem;
 }
+a.project-link { text-decoration: none; min-height: 44px; }
+a.project-link:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 /* Projet mis en avant — 2 colonnes sur toute la largeur */
 .project.is-featured { grid-column: 1 / -1; display: grid; grid-template-columns: 0.85fr 1.15fr; }
@@ -925,10 +902,10 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 .featured-meta { margin-top: auto; padding-top: 1.75rem; }
 .featured-meta dl { display: grid; grid-template-columns: auto 1fr; gap: 0.55rem 1rem; }
 .featured-meta dt {
-  font-family: var(--font-mono); font-size: 0.66rem;
+  font-family: var(--font-mono); font-size: 0.75rem;
   color: var(--text-3); text-transform: uppercase; letter-spacing: 0.1em;
 }
-.featured-meta dd { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-2); }
+.featured-meta dd { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-2); }
 
 /* Captures */
 .shots { display: grid; gap: 0.5rem; margin-top: 1.25rem; }
@@ -948,6 +925,10 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
   user-select: none; -webkit-user-drag: none;
 }
 .shots.solo .shot { aspect-ratio: 16 / 10; }
+/* Deux ecrans de bureau empiles + un ecran de telephone sur toute la hauteur */
+.shots.erp { grid-template-columns: 1.9fr 0.72fr; }
+.shots.erp .shot { aspect-ratio: 16 / 10; }
+.shots.erp .shot.is-phone { grid-column: 2; grid-row: 1 / 3; aspect-ratio: auto; }
 
 /* ============================================================
    COMPÉTENCES
@@ -963,13 +944,13 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 }
 .skill:hover .skill-icon { transform: scale(1.08) rotate(-6deg); }
 .skill-cat {
-  font-family: var(--font-mono); font-size: 0.65rem;
+  font-family: var(--font-mono); font-size: 0.75rem;
   letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--text-3); margin-bottom: 0.45rem;
 }
 .skill-name { font-size: 1.02rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.9rem; }
 .skill-list { display: flex; flex-wrap: wrap; gap: 0.3rem; }
-.skill-list .tag { font-size: 0.63rem; }
+.skill-list .tag { font-size: 0.75rem; }
 /* La première carte occupe 2 colonnes — la spécialité mérite le poids visuel */
 .skill.is-lead { grid-column: span 2; }
 .skill.is-lead .skill-name { font-size: 1.3rem; }
@@ -995,7 +976,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 .track { display: flex; flex-direction: column; }
 .track-head {
   display: inline-flex; align-items: center; gap: 0.65rem;
-  font-family: var(--font-mono); font-size: 0.74rem;
+  font-family: var(--font-mono); font-size: 0.75rem;
   letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--accent);
   padding-bottom: 0.65rem; margin-bottom: 1.5rem;
@@ -1032,7 +1013,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 .tl-item:hover::before { background: var(--accent); box-shadow: 0 0 0 4px var(--bg), 0 0 0 8px rgba(255,107,26,0.14); }
 .tl-when {
   display: inline-flex; align-items: center; gap: 0.45rem;
-  font-family: var(--font-mono); font-size: 0.7rem;
+  font-family: var(--font-mono); font-size: 0.75rem;
   color: var(--accent); margin-bottom: 0.55rem;
 }
 .tl-head { display: flex; align-items: flex-start; gap: 0.85rem; margin-bottom: 0.6rem; }
@@ -1048,11 +1029,12 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 .tl-item:hover .tl-logo { transform: scale(1.06) rotate(-2deg); }
 .logo-uta   { background: linear-gradient(135deg, #1565C0, #0D47A1); }
 .logo-lycee { background: linear-gradient(135deg, #8B4513, #5D2E08); }
+.logo-gnz   { background: linear-gradient(135deg, #1F3F73, #2B5797); }
 .tl-title { font-size: 1rem; font-weight: 700; line-height: 1.45; letter-spacing: -0.015em; }
 .tl-org { color: var(--accent); }
 .tl-badge {
   display: inline-block; vertical-align: middle; margin-left: 0.3rem;
-  font-family: var(--font-mono); font-size: 0.6rem;
+  font-family: var(--font-mono); font-size: 0.75rem;
   padding: 0.12rem 0.42rem; border-radius: var(--r-xs);
   text-transform: uppercase; letter-spacing: 0.08em;
   background: rgba(45,207,140,0.08); color: var(--green);
@@ -1124,7 +1106,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 .channel-txt { min-width: 0; flex: 1; }
 .channel-label {
   display: block;
-  font-family: var(--font-mono); font-size: 0.65rem;
+  font-family: var(--font-mono); font-size: 0.75rem;
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3);
 }
 .channel-value {
@@ -1146,7 +1128,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 }
 .footer-brand { font-family: var(--font-mono); font-size: 0.82rem; color: var(--text-2); }
 .footer-brand i { color: var(--accent); font-style: normal; }
-.footer-copy { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-3); }
+.footer-copy { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3); }
 .socials { display: flex; gap: 0.6rem; }
 .social {
   width: 36px; height: 36px;
@@ -1211,7 +1193,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 .form { display: flex; flex-direction: column; gap: 0.8rem; }
 .field { display: flex; flex-direction: column; gap: 0.35rem; }
 .field label {
-  font-family: var(--font-mono); font-size: 0.68rem;
+  font-family: var(--font-mono); font-size: 0.75rem;
   letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3);
 }
 .field label .req { color: var(--accent); }
@@ -1227,7 +1209,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 .field textarea { resize: vertical; min-height: 70px; }
 .form-submit {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-  background: var(--accent); color: #fff;
+  background: var(--accent); color: var(--on-accent);
   padding: 0.85rem 1.5rem; border: none; border-radius: var(--r-sm);
   font-family: var(--font-head); font-size: 0.9rem; font-weight: 700;
   margin-top: 0.4rem; cursor: pointer;
@@ -1235,6 +1217,13 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 }
 .form-submit:hover:not(:disabled) { background: var(--accent-2); transform: translateY(-2px); }
 .form-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+.form-skip {
+  background: transparent; border: none;
+  color: var(--text-2); font-family: var(--font-mono); font-size: 0.8rem;
+  min-height: 44px; cursor: pointer;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.form-skip:hover { color: var(--text); }
 .form-status {
   display: none;
   font-family: var(--font-mono); font-size: 0.76rem;
@@ -1250,7 +1239,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 }
 .form-note {
   margin-top: 0.85rem; text-align: center; line-height: 1.6;
-  font-family: var(--font-mono); font-size: 0.66rem; color: var(--text-3);
+  font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3);
 }
 .form-note i { color: var(--green); margin-right: 0.3rem; }
 
@@ -1272,7 +1261,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
   position: absolute; right: calc(100% + 0.7rem); top: 50%;
   transform: translateY(-50%);
   background: var(--surface); color: var(--text);
-  font-family: var(--font-mono); font-size: 0.72rem;
+  font-family: var(--font-mono); font-size: 0.75rem;
   padding: 0.45rem 0.8rem; border-radius: var(--r-sm);
   border: 1px solid var(--line-2); white-space: nowrap;
   opacity: 0; pointer-events: none;
@@ -1449,12 +1438,26 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
   .fab-tip { display: none; }
   .modal { padding: 1.6rem; }
   .tl-shot { aspect-ratio: 4 / 3; }
+  /* 16px minimum dans les champs : en dessous, iOS zoome sur la page au focus. */
+  .field input, .field textarea { font-size: 1rem; }
+
+  /* Experiences repliables (le bouton est ajoute par le JS ; sans JS, tout reste deplie). */
+  .tl-item.is-collapsed .tl-desc { display: none; }
+  .tl-toggle {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    min-height: 44px; margin-top: 0.25rem; padding: 0;
+    background: transparent; border: none; cursor: pointer;
+    font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent);
+  }
+  .tl-toggle i { transition: transform 0.25s var(--ease); }
+  .tl-toggle[aria-expanded="true"] i { transform: rotate(180deg); }
 }
+/* Le bouton n'existe que sur mobile */
+@media (min-width: 701px) { .tl-toggle { display: none; } }
 
 @media (max-width: 420px) {
-  .metrics-grid { grid-template-columns: 1fr; }
-  .metric { border-right: none; border-bottom: 1px solid var(--line); }
-  .metric:last-child { border-bottom: none; }
+  /* Chiffres cles en 2x2 : en une colonne ils occupaient pres d'un ecran entier. */
+  .metric { padding: 1.4rem 1rem; }
   .nav-logo { font-size: 0.82rem; }
   .portrait-caption { flex-direction: column; gap: 0.5rem; }
   .portrait-caption .sig { text-align: left; }
@@ -1464,6 +1467,11 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 @media (hover: none), (pointer: coarse) {
   .card::after { display: none; }
   .card:hover, .skill:hover, .tl-item:hover { transform: none !important; }
+  /* Zones tactiles : 44px minimum (WCAG 2.5.5 / recommandations iOS & Android) */
+  .social { width: 44px; height: 44px; }
+  .modal-close { width: 44px; height: 44px; top: 0.6rem; right: 0.6rem; }
+  .nav-burger, .mobile-menu-close { width: 44px; height: 44px; }
+  .nav-actions .btn-sm { min-height: 44px; }
 }
 
 /* Mouvement réduit */
@@ -1501,9 +1509,9 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
   </nav>
 
   <div class="nav-actions">
-    <button type="button" class="btn btn-sm btn-outline js-cv" aria-haspopup="dialog">
+    <a href="cv-leonel-yapi.pdf" download class="btn btn-sm btn-outline js-cv">
       <i class="fa-solid fa-download" aria-hidden="true"></i> CV
-    </button>
+    </a>
     <a href="#contact" class="btn btn-sm btn-solid magnetic">Me contacter</a>
     <button type="button" class="nav-burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu">
       <i class="fa-solid fa-bars" aria-hidden="true"></i>
@@ -1526,9 +1534,9 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
     <a href="#contact"><span>04</span>Contact</a>
   </nav>
   <div class="mobile-menu-foot">
-    <button type="button" class="btn btn-lg btn-outline js-cv">
+    <a href="cv-leonel-yapi.pdf" download class="btn btn-lg btn-outline js-cv">
       <i class="fa-solid fa-download" aria-hidden="true"></i> Télécharger mon CV
-    </button>
+    </a>
     <a href="https://wa.me/2250768124234" target="_blank" rel="noopener" class="btn btn-lg btn-solid">
       <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp
     </a>
@@ -1540,7 +1548,6 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 <!-- ============ HERO ============ -->
 <section class="hero" aria-labelledby="heroTitle">
   <div class="hero-glow" aria-hidden="true"></div>
-  <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
 
   <div class="hero-text">
     <p class="status fade-up">
@@ -1567,9 +1574,9 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
       <a href="#projets" class="btn btn-lg btn-solid magnetic">
         Voir mes projets <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
       </a>
-      <button type="button" class="btn btn-lg btn-outline magnetic js-cv" aria-haspopup="dialog">
+      <a href="cv-leonel-yapi.pdf" download class="btn btn-lg btn-outline magnetic js-cv">
         <i class="fa-solid fa-download" aria-hidden="true"></i> Télécharger mon CV
-      </button>
+      </a>
     </div>
 
     <div class="hero-trust fade-up d3">
@@ -1579,6 +1586,8 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
         <span>UNACOOPEC CI</span>
         <span>ALLO 101</span>
         <span>MENA · SIGE</span>
+        <span>Dialab-ci</span>
+        <span>Bail Ivoire</span>
       </div>
     </div>
   </div>
@@ -1616,9 +1625,9 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 <div class="metrics">
   <div class="metrics-grid">
     <div class="metric">
-      <div class="metric-num"><span class="count" data-to="4">0</span></div>
+      <div class="metric-num"><span class="count" data-to="6">0</span></div>
       <div class="metric-label">Projets livrés</div>
-      <div class="metric-sub">dont 3 en production</div>
+      <div class="metric-sub">dont 5 en production</div>
     </div>
     <div class="metric">
       <div class="metric-num"><span class="count" data-to="3">0</span></div>
@@ -1729,6 +1738,157 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
         <div class="project-foot">
           <span class="project-client">Clients : <strong>Orange Côte d'Ivoire &amp; UNACOOPEC CI</strong></span>
           <span class="project-live"><i class="fa-solid fa-check" aria-hidden="true"></i> Déployé en production</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- LAGUNE ERP — FEATURED -->
+    <article class="card project is-featured tilt reveal">
+      <div class="project-top">
+        <div class="project-bar" style="background-image: linear-gradient(90deg, #4A9EFF, #F5A623);"></div>
+        <p class="project-badge badge-prod"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Production</p>
+        <h3 class="project-title">Lagune ERP</h3>
+        <p class="project-sub">Suite de gestion d'entreprise<br>Stock · Ventes · Finance · Service technique · Commercial</p>
+
+        <div class="featured-meta">
+          <dl>
+            <dt>Cadre</dt><dd>Projet personnel · mon propre produit</dd>
+            <dt>Rôle</dt><dd>Conception, développement &amp; déploiement</dd>
+            <dt>Périmètre</dt><dd>Stock, finance, SAV, commercial, livraisons, pilotage DG</dd>
+            <dt>Qualité</dt><dd>153 tests de recette · 18 critères / 18</dd>
+            <dt>Terrain</dt><dd>Fonctionne hors ligne (PWA)</dd>
+            <dt>Statut</dt><dd style="color:var(--green)">En production</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="project-body">
+        <p class="project-desc">
+          Mon propre produit : un ERP web, installé chez chaque entreprise cliente. Stock valorisé (CUMP / FIFO, prélèvement FEFO,
+          lots et DLC, saisie à la douchette), devis et factures FNE, trésorerie et rapprochement bancaire,
+          export comptable Sage (SYSCOHADA), interventions techniques avec signature du client, pipeline
+          commercial, visites géolocalisées, campagnes e-mail / SMS et paiements Wave. Les magasiniers et
+          techniciens continuent de travailler pendant les coupures réseau : saisies synchronisées sans doublon
+          au retour de la connexion, journal des mouvements inaltérable.
+        </p>
+
+        <div class="project-stack">
+          <span class="tag">NestJS</span>
+          <span class="tag">React 19</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">PostgreSQL 16</span>
+          <span class="tag">Prisma</span>
+          <span class="tag">Mantine</span>
+          <span class="tag">PWA · IndexedDB</span>
+          <span class="tag">Argon2id</span>
+          <span class="tag">Docker Compose</span>
+          <span class="tag">Caddy</span>
+          <span class="tag">GitHub Actions</span>
+          <span class="tag">API Wave</span>
+          <span class="tag">SMS Orange CI</span>
+          <span class="tag">Leaflet</span>
+        </div>
+
+        <div class="shots erp">
+          <div class="shot">
+            <picture>
+              <source srcset="screenshot-lagune-pilotage.webp" type="image/webp">
+              <img src="screenshot-lagune-pilotage.jpg" alt="Écran de pilotage de la direction dans Lagune ERP : chiffre d'affaires, trésorerie, créances et actions à traiter" width="1440" height="900" loading="lazy" decoding="async">
+            </picture>
+          </div>
+          <div class="shot">
+            <picture>
+              <source srcset="screenshot-lagune-pipeline.webp" type="image/webp">
+              <img src="screenshot-lagune-pipeline.jpg" alt="Pipeline commercial de Lagune ERP, opportunités classées par étape" width="1440" height="900" loading="lazy" decoding="async">
+            </picture>
+          </div>
+          <div class="shot is-phone">
+            <picture>
+              <source srcset="screenshot-lagune-livraisons.webp" type="image/webp">
+              <img src="screenshot-lagune-livraisons.jpg" alt="Tournée de livraison du livreur sur téléphone dans Lagune ERP" width="780" height="2232" loading="lazy" decoding="async">
+            </picture>
+          </div>
+        </div>
+
+        <div class="project-foot">
+          <span class="project-client">Premier client : <strong>Dialab-ci</strong> · matériel de laboratoire</span>
+          <span class="project-live"><i class="fa-solid fa-check" aria-hidden="true"></i> En production</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- BAIL IVOIRE — FEATURED -->
+    <article class="card project is-featured tilt reveal">
+      <div class="project-top">
+        <div class="project-bar" style="background-image: linear-gradient(90deg, #FF6B1A, #4A9EFF);"></div>
+        <p class="project-badge badge-prod"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Production</p>
+        <h3 class="project-title">Bail Ivoire</h3>
+        <p class="project-sub">Plateforme nationale de location immobilière<br>CDC-CI · BHCI · DGI · SONAPIE</p>
+
+        <div class="featured-meta">
+          <dl>
+            <dt>Rôle</dt><dd>Développeur de toute la plateforme &amp; mise en production</dd>
+            <dt>Architecture</dt><dd>7 microservices .NET · 2 apps Angular</dd>
+            <dt>Infra</dt><dd>11 conteneurs · HTTPS Cloudflare strict</dd>
+            <dt>Livraison</dt><dd>CI/CD GitHub Actions → GHCR</dd>
+            <dt>Statut</dt><dd style="color:var(--green)">En ligne · bailivoire.ci</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="project-body">
+        <p class="project-desc">
+          Plateforme où locataires et bailleurs trouvent un logement, signent leur bail électroniquement et
+          consignent la caution auprès de la Caisse des Dépôts et Consignations. Un back-office institutionnel
+          valide les biens, instruit les dossiers et pilote l'activité locative. J'ai développé l'ensemble
+          de la plateforme : les 7 microservices .NET, le portail et le back-office Angular, le volet SONAPIE
+          (logement des agents de l'État : inscription « Gouvernement », demandes de logement, circuit
+          d'instruction), puis sa mise en production sur le serveur du client : bases isolées, secrets
+          propres, HTTPS derrière Cloudflare et déploiement par images construites en CI.
+        </p>
+
+        <div class="project-stack">
+          <span class="tag">.NET / C#</span>
+          <span class="tag">EF Core</span>
+          <span class="tag">Angular</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">RabbitMQ</span>
+          <span class="tag">MinIO</span>
+          <span class="tag">Docker Compose</span>
+          <span class="tag">Nginx</span>
+          <span class="tag">Cloudflare</span>
+          <span class="tag">GitHub Actions</span>
+          <span class="tag">GHCR</span>
+          <span class="tag">Signature électronique</span>
+          <span class="tag">Mobile Money</span>
+        </div>
+
+        <div class="shots trio">
+          <div class="shot">
+            <picture>
+              <source srcset="screenshot-bailivoire-portail.webp" type="image/webp">
+              <img src="screenshot-bailivoire-portail.jpg" alt="Page d'accueil du portail Bail Ivoire : plateforme immobilière sécurisée par la CDC-CI" width="1440" height="660" style="object-position: left top;" loading="lazy" decoding="async">
+            </picture>
+          </div>
+          <div class="shot">
+            <picture>
+              <source srcset="screenshot-bailivoire-fonctionnalites.webp" type="image/webp">
+              <img src="screenshot-bailivoire-fonctionnalites.jpg" alt="Fonctionnalités du portail Bail Ivoire : recherche, transactions sécurisées, gestion locative" width="1440" height="900" loading="lazy" decoding="async">
+            </picture>
+          </div>
+          <div class="shot">
+            <picture>
+              <source srcset="screenshot-bailivoire-backoffice.webp" type="image/webp">
+              <img src="screenshot-bailivoire-backoffice.jpg" alt="Connexion à la console d'administration de la plateforme nationale Bail Ivoire" width="1440" height="900" loading="lazy" decoding="async">
+            </picture>
+          </div>
+        </div>
+
+        <div class="project-foot">
+          <span class="project-client">Mission de consultant · <strong>Gnanzouky Technologies</strong></span>
+          <a class="project-live project-link" href="https://bailivoire.ci" target="_blank" rel="noopener">
+            <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> bailivoire.ci
+          </a>
         </div>
       </div>
     </article>
@@ -1878,7 +2038,9 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
       <div class="skill-list">
         <span class="tag">Java / Spring Boot 3</span>
         <span class="tag">Python</span>
-        <span class="tag">Node.js</span>
+        <span class="tag">.NET / C#</span>
+        <span class="tag">Node.js / NestJS</span>
+        <span class="tag">TypeScript</span>
         <span class="tag">REST API</span>
         <span class="tag">Rust</span>
         <span class="tag">Microservices</span>
@@ -1914,7 +2076,8 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
         <span class="tag">Kubernetes</span>
         <span class="tag">CI/CD</span>
         <span class="tag">Ubuntu Server</span>
-        <span class="tag">Nginx</span>
+        <span class="tag">Nginx / Caddy</span>
+        <span class="tag">Cloudflare</span>
         <span class="tag">ArgoCD</span>
       </div>
     </article>
@@ -1929,6 +2092,7 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
         <span class="tag">React</span>
         <span class="tag">Angular</span>
         <span class="tag">Flutter</span>
+        <span class="tag">PWA hors ligne</span>
         <span class="tag">HTML / CSS</span>
         <span class="tag">JavaScript</span>
       </div>
@@ -1990,6 +2154,11 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
           chiffrement ECDH et SSO Keycloak.
         </p>
         <p>
+          Consultant également chez <strong>Gnanzouky Technologies</strong>, j'ai développé la plateforme
+          immobilière nationale <strong>Bail Ivoire</strong>. Et j'ai conçu mon propre produit,
+          <strong>Lagune ERP</strong>, une suite de gestion d'entreprise en production chez <strong>Dialab-ci</strong>.
+        </p>
+        <p>
           Étudiant en <strong>Master BDGL</strong> (Base de Données &amp; Génie Logiciel) à l'<strong>UFHB Cocody</strong>,
           je combine rigueur académique et expérience terrain — <strong>3 ans</strong> de Java/Spring Boot,
           de QA automatisé et d'architectures microservices.
@@ -2001,6 +2170,33 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 
       <h3 class="track-head"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Expérience professionnelle</h3>
       <div class="timeline">
+
+        <article class="card tl-item">
+          <p class="tl-when"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Mars 2026 — Présent · Abidjan, CI</p>
+          <div class="tl-head">
+            <span class="tl-logo logo-gnz" title="Gnanzouky Technologies">GT</span>
+            <h4 class="tl-title">Consultant Ingénieur Logiciel · <span class="tl-org">Gnanzouky Technologies</span> <span class="tl-badge">Consultant</span></h4>
+          </div>
+          <div class="tl-desc">
+            Développeur de toute la plateforme immobilière <strong>IMODOO</strong>, en production sous la marque
+            <strong>Bail Ivoire</strong> (bailivoire.ci), avec la CDC-CI, la BHCI et la DGI :
+            <ul class="tl-list">
+              <li><strong>7 microservices .NET</strong> (authentification, référentiel, propriétés, demandes, contrats, paiements, notifications) et deux applications <strong>Angular</strong> : portail locataires / bailleurs et back-office institutionnel.</li>
+              <li>Volet <strong>SONAPIE</strong> : logement des agents de l'État, inscription « Gouvernement », demandes de logement et circuit d'instruction.</li>
+              <li>Mise en production sur le serveur du client : bases isolées, HTTPS derrière Cloudflare, CI/CD GitHub Actions avec images publiées sur GHCR.</li>
+            </ul>
+            <div class="tl-stack">
+              <span class="tag">.NET / C#</span>
+              <span class="tag">Angular</span>
+              <span class="tag">PostgreSQL</span>
+              <span class="tag">RabbitMQ</span>
+              <span class="tag">MinIO</span>
+              <span class="tag">Docker</span>
+              <span class="tag">Cloudflare</span>
+              <span class="tag">GitHub Actions</span>
+            </div>
+          </div>
+        </article>
 
         <article class="card tl-item">
           <p class="tl-when"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Novembre 2025 — Présent · Abidjan, CI</p>
@@ -2198,14 +2394,14 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
         <i class="fa-solid fa-arrow-right channel-arrow" aria-hidden="true"></i>
       </a>
 
-      <button type="button" class="channel js-cv" aria-haspopup="dialog" style="width:100%;text-align:left;font:inherit;cursor:pointer;">
+      <a href="cv-leonel-yapi.pdf" download class="channel js-cv">
         <span class="channel-ico"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i></span>
         <span class="channel-txt">
           <span class="channel-label">Curriculum Vitae</span>
           <span class="channel-value">Télécharger le PDF</span>
         </span>
         <i class="fa-solid fa-arrow-right channel-arrow" aria-hidden="true"></i>
-      </button>
+      </a>
     </div>
 
   </div>
@@ -2232,9 +2428,9 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 <div class="modal-backdrop" id="cvModal" role="dialog" aria-modal="true" aria-labelledby="cvTitle">
   <div class="modal">
     <button type="button" class="modal-close" id="cvClose" aria-label="Fermer"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
-    <div class="modal-ico"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i></div>
-    <h2 id="cvTitle">Télécharger mon CV</h2>
-    <p>Juste quelques infos rapides pour que je puisse vous recontacter si nécessaire — le téléchargement démarre dès l'envoi.</p>
+    <div class="modal-ico"><i class="fa-solid fa-check" aria-hidden="true"></i></div>
+    <h2 id="cvTitle" tabindex="-1">Votre CV est en route</h2>
+    <p>Le téléchargement a démarré. Vous recrutez ou avez un projet ? Laissez vos coordonnées si vous le souhaitez, je vous recontacte rapidement — c'est entièrement facultatif.</p>
 
     <form class="form" id="cvForm" action="https://formspree.io/f/xgoqjpnw" method="POST">
       <div class="field">
@@ -2256,8 +2452,9 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
       <input type="hidden" name="_subject" value="Nouvelle demande de CV depuis le portfolio">
       <input type="text" name="_gotcha" tabindex="-1" aria-hidden="true" style="display:none">
       <button type="submit" class="form-submit" id="cvSubmit">
-        <i class="fa-solid fa-download" aria-hidden="true"></i> Recevoir le CV
+        <i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Être recontacté
       </button>
+      <button type="button" class="form-skip" id="cvSkip">Non merci, fermer</button>
       <p class="form-status" id="cvStatus" role="status" aria-live="polite"></p>
       <p class="form-note"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Vos infos restent strictement confidentielles.</p>
     </form>
@@ -2347,8 +2544,8 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
      AMBIANCE 2 — champ de particules
 
      Canvas 2D volontairement, pas WebGL : pour quelques dizaines
-     de points, le 2D est plus leger et fonctionne meme la ou la
-     scene Three.js est desactivee (mobile, absence de GPU).
+     de points, le 2D est plus leger et fonctionne partout
+     (mobile, absence de GPU).
      ============================================================ */
   if (!reducedMotion) {
     const cv = $('#particles');
@@ -2551,14 +2748,18 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
   const form   = $('#cvForm');
   const status = $('#cvStatus');
   const submit = $('#cvSubmit');
-  const CV_FILE = 'cv-leonel-yapi.pdf';
   let lastFocused = null;
 
+  /* Le CV se telecharge directement (lien natif <a download>, qui marche
+     aussi sans JS). La modale ne fait que proposer, apres coup, de laisser
+     ses coordonnees : on ne bloque jamais l'acces au CV derriere un formulaire.
+     Le focus va sur le titre et non sur un champ, pour ne pas ouvrir le
+     clavier sur mobile a quelqu'un qui voulait juste le PDF. */
   function openModal(trigger) {
     lastFocused = trigger || document.activeElement;
     modal.classList.add('is-open');
     document.body.style.overflow = 'hidden';
-    setTimeout(() => $('#cvName').focus(), 320);
+    setTimeout(() => $('#cvTitle').focus(), 320);
   }
   function closeModal() {
     modal.classList.remove('is-open');
@@ -2568,12 +2769,19 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
     if (lastFocused) lastFocused.focus();
   }
 
-  $$('.js-cv').forEach(btn => btn.addEventListener('click', e => {
-    e.preventDefault();
+  $$('.js-cv').forEach(btn => btn.addEventListener('click', () => {
+    /* Pas de preventDefault : le navigateur lance le telechargement. */
     closeMenu();
-    openModal(btn);
+    /* Une seule proposition par visite : au 2e clic, on telecharge sans rien demander. */
+    let asked = false;
+    try {
+      asked = sessionStorage.getItem('cvAsked') === '1';
+      sessionStorage.setItem('cvAsked', '1');
+    } catch (_) {}
+    if (!asked) openModal(btn);
   }));
   $('#cvClose').addEventListener('click', closeModal);
+  $('#cvSkip').addEventListener('click', closeModal);
   modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
 
   /* Échap + piège de focus */
@@ -2600,24 +2808,14 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
-  function download() {
-    const a = document.createElement('a');
-    a.href = CV_FILE;
-    a.download = CV_FILE;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-  }
-
   form.addEventListener('submit', async e => {
     e.preventDefault();
     submit.disabled = true;
     submit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Envoi…';
     status.className = 'form-status';
 
-    /* Le visiteur a rempli ce formulaire pour obtenir le CV : il repart avec,
-       que la notification me parvienne ou non. L'envoi Formspree est un bonus
-       pour le proprietaire du site, pas une condition pour le visiteur. */
+    /* Le CV est deja telecharge a ce stade : ce formulaire ne sert qu'a
+       me transmettre les coordonnees du visiteur. */
     let delivered = true;
     try {
       const res = await fetch(form.action, {
@@ -2644,236 +2842,50 @@ body.cursor-off .cursor, body.cursor-off .cursor-ring { opacity: 0; }
 
     if (delivered) {
       status.className = 'form-status is-ok';
-      status.innerHTML = '<i class="fa-solid fa-check"></i> Merci ! Téléchargement en cours…';
+      status.innerHTML = '<i class="fa-solid fa-check"></i> Merci ! Je vous recontacte rapidement.';
+      form.reset();
+      setTimeout(closeModal, 2000);
     } else {
       status.className = 'form-status is-warn';
-      status.innerHTML = `<i class="fa-solid fa-circle-info"></i> Téléchargement en cours…`
-        + `<br>Votre message n’a pas pu m’être transmis — écrivez-moi à leonelyapi30@gmail.com.`;
+      status.innerHTML = `<i class="fa-solid fa-circle-info"></i> Votre message n’a pas pu m’être transmis`
+        + ` — écrivez-moi à leonelyapi30@gmail.com.`;
     }
-    setTimeout(() => { download(); setTimeout(closeModal, delivered ? 1500 : 4500); }, 600);
 
     submit.disabled = false;
-    submit.innerHTML = '<i class="fa-solid fa-download"></i> Recevoir le CV';
+    submit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Être recontacté';
   });
 
 
   /* ============================================================
-     SCENE 3D DU HERO — carte a puce JavaCard (Three.js)
+     EXPERIENCES REPLIABLES (mobile)
 
-     Chargement paresseux et strictement conditionnel : rien n'est
-     telecharge tant que les quatre conditions ne sont pas reunies
-     (pointeur fin, animations autorisees, ecran large, WebGL
-     disponible). Sur mobile, en mouvement reduit ou sans GPU, la
-     page reste exactement celle d'avant, halo radial compris.
+     Sur mobile, la section Parcours faisait pres de 4 000px. On garde
+     l'experience actuelle depliee et on replie les suivantes derriere
+     un bouton. Le repli n'est actif qu'en dessous de 700px (CSS) : sur
+     grand ecran, la classe is-collapsed n'a aucun effet.
      ============================================================ */
-  const heroCanvas = $('#heroCanvas');
+  $$('.timeline:not(.is-edu) .tl-item').forEach((item, i) => {
+    const desc = $('.tl-desc', item);
+    if (!desc) return;
+    desc.id = desc.id || 'tl-desc-' + i;
 
-  function webglSupported() {
-    try {
-      const c = document.createElement('canvas');
-      return !!(window.WebGLRenderingContext &&
-        (c.getContext('webgl') || c.getContext('experimental-webgl')));
-    } catch (e) { return false; }
-  }
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'tl-toggle';
+    btn.setAttribute('aria-controls', desc.id);
 
-  function initHeroScene(THREE) {
-    const hero = document.querySelector('.hero');
-    const renderer = new THREE.WebGLRenderer({
-      canvas: heroCanvas, alpha: true, antialias: true, powerPreference: 'high-performance'
-    });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.outputEncoding = THREE.sRGBEncoding;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 0.92;
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
-    camera.position.set(0, 0, 6);
-
-    /* ---- Rectangle a coins arrondis, extrude en dalle biseautee ---- */
-    function roundedRect(w, h, r) {
-      const s = new THREE.Shape();
-      s.moveTo(-w / 2 + r, -h / 2);
-      s.lineTo(w / 2 - r, -h / 2);
-      s.quadraticCurveTo(w / 2, -h / 2, w / 2, -h / 2 + r);
-      s.lineTo(w / 2, h / 2 - r);
-      s.quadraticCurveTo(w / 2, h / 2, w / 2 - r, h / 2);
-      s.lineTo(-w / 2 + r, h / 2);
-      s.quadraticCurveTo(-w / 2, h / 2, -w / 2, h / 2 - r);
-      s.lineTo(-w / 2, -h / 2 + r);
-      s.quadraticCurveTo(-w / 2, -h / 2, -w / 2 + r, -h / 2);
-      return s;
+    function set(open) {
+      item.classList.toggle('is-collapsed', !open);
+      btn.setAttribute('aria-expanded', String(open));
+      btn.innerHTML = (open ? 'Masquer le détail' : 'Voir le détail')
+        + ' <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>';
     }
-    function slab(w, h, r, depth) {
-      const g = new THREE.ExtrudeGeometry(roundedRect(w, h, r), {
-        depth: depth, bevelEnabled: true, bevelThickness: depth * 0.25,
-        bevelSize: depth * 0.25, bevelSegments: 2, curveSegments: 14
-      });
-      g.center();
-      return g;
-    }
+    btn.addEventListener('click', () => set(item.classList.contains('is-collapsed')));
+    /* Les postes en cours restent deplies, les anciens sont replies. */
+    set(i === 0 || /Présent/.test($('.tl-when', item)?.textContent || ''));
+    item.appendChild(btn);
+  });
 
-    const card = new THREE.Group();
-
-    /* ---- Corps : proportions ID-1 (85,6 x 54 mm) ---- */
-    const body = new THREE.Mesh(
-      slab(3.05, 1.92, 0.15, 0.05),
-      new THREE.MeshStandardMaterial({ color: 0x0d0d12, metalness: 0.78, roughness: 0.26 })
-    );
-    card.add(body);
-
-    /* ---- Puce doree ---- */
-    const chip = new THREE.Mesh(
-      slab(0.46, 0.36, 0.05, 0.02),
-      new THREE.MeshStandardMaterial({ color: 0xd9a441, metalness: 0.95, roughness: 0.22 })
-    );
-    chip.position.set(-0.86, 0.12, 0.037);
-    card.add(chip);
-
-    /* Plages de contact dessinees en 2D : le plan a des UV propres,
-       contrairement a la geometrie extrudee. */
-    const padCanvas = document.createElement('canvas');
-    padCanvas.width = 256; padCanvas.height = 200;
-    const pc = padCanvas.getContext('2d');
-    pc.strokeStyle = 'rgba(58,38,8,0.9)';
-    pc.lineWidth = 9;
-    pc.beginPath();
-    pc.moveTo(0, 66); pc.lineTo(96, 66);
-    pc.moveTo(160, 66); pc.lineTo(256, 66);
-    pc.moveTo(0, 134); pc.lineTo(96, 134);
-    pc.moveTo(160, 134); pc.lineTo(256, 134);
-    pc.moveTo(96, 18); pc.lineTo(96, 182);
-    pc.moveTo(160, 18); pc.lineTo(160, 182);
-    pc.stroke();
-    const pads = new THREE.Mesh(
-      new THREE.PlaneGeometry(0.44, 0.34),
-      new THREE.MeshBasicMaterial({
-        map: new THREE.CanvasTexture(padCanvas), transparent: true, opacity: 0.6
-      })
-    );
-    pads.position.set(-0.86, 0.12, 0.05);
-    card.add(pads);
-
-    /* ---- Zone biometrique : cretes d'empreinte imprimees ---- */
-    const fpCanvas = document.createElement('canvas');
-    fpCanvas.width = 256; fpCanvas.height = 256;
-    const fc = fpCanvas.getContext('2d');
-    fc.strokeStyle = 'rgba(255,107,26,0.9)';
-    fc.lineWidth = 3.2;
-    for (let i = 0; i < 9; i++) {
-      fc.beginPath();
-      fc.ellipse(128, 132, 12 + i * 12.5, 18 + i * 13.5, 0, Math.PI * 0.12, Math.PI * 1.88);
-      fc.stroke();
-    }
-    fc.beginPath();
-    fc.ellipse(128, 126, 7, 11, 0, 0, Math.PI * 2);
-    fc.stroke();
-    const fingerprint = new THREE.Mesh(
-      new THREE.PlaneGeometry(0.82, 0.82),
-      new THREE.MeshBasicMaterial({
-        map: new THREE.CanvasTexture(fpCanvas), transparent: true, opacity: 0.6
-      })
-    );
-    fingerprint.position.set(0.82, -0.02, 0.031);
-    card.add(fingerprint);
-
-    /* ---- Liseres orange : la signature de la palette ---- */
-    const accentMat = new THREE.MeshStandardMaterial({
-      color: 0xff6b1a, emissive: 0xff6b1a, emissiveIntensity: 0.9,
-      metalness: 0.2, roughness: 0.4
-    });
-    const stripe = new THREE.Mesh(new THREE.BoxGeometry(3.05, 0.045, 0.012), accentMat);
-    stripe.position.set(0, 0.72, 0.032);
-    card.add(stripe);
-    const tick = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.022, 0.01), accentMat);
-    tick.position.set(-0.86, -0.5, 0.032);
-    card.add(tick);
-
-    card.scale.setScalar(0.70);
-    card.position.set(0.46, 0.66, -1.1);
-    scene.add(card);
-
-    /* ---- Eclairage : cle chaude, remplissage teal, contre-jour ---- */
-    scene.add(new THREE.AmbientLight(0xffffff, 0.16));
-    /* Cle blanche : une cle orange teintait toute la carte en brun. */
-    const key = new THREE.DirectionalLight(0xffffff, 1.5);
-    key.position.set(2.5, 3.2, 4.5);
-    scene.add(key);
-    /* L orange n intervient qu en lumiere rasante, sur les aretes. */
-    const warm = new THREE.PointLight(0xff6b1a, 2.1, 10);
-    warm.position.set(2.6, -1.4, 1.8);
-    scene.add(warm);
-    const cool = new THREE.PointLight(0x1ec8a8, 2.0, 12);
-    cool.position.set(-2.8, 1.6, 1.2);
-    scene.add(cool);
-    const rim = new THREE.DirectionalLight(0xffffff, 0.9);
-    rim.position.set(-1.5, 1.0, -4);
-    scene.add(rim);
-
-    function resize() {
-      const r = hero.getBoundingClientRect();
-      const w = Math.max(1, r.width), h = Math.max(1, r.height);
-      renderer.setSize(w, h, false);
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-    }
-    resize();
-    window.addEventListener('resize', resize, { passive: true });
-
-    /* ---- Souris, amortie ---- */
-    let tx = 0, ty = 0, cx = 0, cy = 0;
-    window.addEventListener('mousemove', e => {
-      tx = (e.clientX / window.innerWidth - 0.5) * 2;
-      ty = (e.clientY / window.innerHeight - 0.5) * 2;
-    }, { passive: true });
-
-    /* ---- Boucle : suspendue hors ecran et onglet cache ---- */
-    let visible = true, last = performance.now(), t = 0;
-    new IntersectionObserver(es => { visible = es[0].isIntersecting; }, { threshold: 0 }).observe(hero);
-    document.addEventListener('visibilitychange', () => { last = performance.now(); });
-
-    function loop(now) {
-      requestAnimationFrame(loop);
-      if (!visible || document.hidden) { last = now; return; }
-      const dt = Math.min(0.05, (now - last) / 1000);
-      last = now;
-      t += dt;
-
-      cx += (tx - cx) * 0.045;
-      cy += (ty - cy) * 0.045;
-
-      const scrolled = window.scrollY / Math.max(1, window.innerHeight);
-      card.rotation.y = t * 0.22 + cx * 0.55;
-      card.rotation.x = Math.sin(t * 0.5) * 0.14 - cy * 0.32 + scrolled * 0.35;
-      card.rotation.z = Math.sin(t * 0.34) * 0.07;
-      card.position.y = 0.66 + Math.sin(t * 0.75) * 0.08;
-
-      renderer.render(scene, camera);
-    }
-    requestAnimationFrame(loop);
-    heroCanvas.classList.add('is-live');
-  }
-
-  if (heroCanvas && finePointer && !reducedMotion &&
-      window.innerWidth >= 980 && webglSupported()) {
-    const startScene = function () {
-      const tag = document.createElement('script');
-      tag.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-      tag.async = true;
-      tag.onload = function () {
-        try { initHeroScene(window.THREE); }
-        catch (err) { console.warn('[3D] Scene non initialisee :', err.message); }
-      };
-      tag.onerror = function () {
-        console.warn('[3D] Three.js non charge, halo statique conserve.');
-      };
-      document.head.appendChild(tag);
-    };
-    /* La 3D ne doit jamais retarder le contenu utile : on attend
-       la fin du chargement de la page. */
-    if (document.readyState === 'complete') setTimeout(startScene, 200);
-    else window.addEventListener('load', function () { setTimeout(startScene, 200); });
-  }
 
   /* ---------- Ancres douces ---------- */
   $$('a[href^="#"]').forEach(a => {
