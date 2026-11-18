@@ -7,10 +7,10 @@ Portfolio personnel d'un ingénieur logiciel spécialisé en cybersécurité bio
 ## Stack
 
 - HTML5 / CSS3 / Vanilla JS
-- Font Awesome 6
-- Google Fonts (Syne, DM Mono, Instrument Serif)
+- Material Symbols (icônes, sous-ensemble chargé à la demande)
+- Google Fonts (Plus Jakarta Sans, JetBrains Mono)
 - Design responsive (mobile / tablette / desktop)
-- Animations modernes : tilt 3D, magnetic buttons, scroll reveal, curseur custom
+- Design « Obsidian Cipher » (maquette Google Stitch) : barre d’onglets mobile, galeries de captures, formulaire de contact Formspree
 
 ## Contact
 
