@@ -2,7 +2,7 @@
 
 Portfolio personnel d'un ingénieur logiciel spécialisé en cybersécurité biométrique, Big Data et architectures distribuées.
 
-🌐 **Live :** https://leonelyap01.github.io/portfolio/
+🌐 **Live :** https://leonelyap01.github.io/leonel-portfolio/
 
 ## Stack
 
